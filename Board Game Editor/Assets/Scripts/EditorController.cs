@@ -12,6 +12,7 @@ public class EditorController : MonoBehaviour
     public Vector3 snapPos;
 
     Vector3 dragStartLoc;
+    Vector3 p1;
     Vector3 dragEndLoc;
     bool dragging = false;
 
@@ -47,6 +48,7 @@ public class EditorController : MonoBehaviour
                     if(!dragging){
                         dragStartLoc.x = hit.point.x;
                         dragStartLoc.z = hit.point.z;
+                        p1 = Input.mousePosition;
                         dragging = true;
                     }
                 }else{
@@ -85,35 +87,56 @@ public class EditorController : MonoBehaviour
         var maxZ = Mathf.Max(dragStartLoc.z, dragEndLoc.z);
         
         foreach(GameObject tile in allTiles){
-            if(minX < tile.transform.position.x && tile.transform.position.x < maxX){
-                if(minZ < tile.transform.position.z && tile.transform.position.z < maxZ){
+            if(minX < tile.transform.position.x + 0.5 && tile.transform.position.x + 0.5 < maxX){
+                if(minZ < tile.transform.position.z + 0.5 && tile.transform.position.z + 0.5 < maxZ){
                     selection.Add(tile);
                 }
             }
         }
     }
 
+    private void OnGUI(){
+        if(dragging){
+            var rect = SelectionBox.GetScreenRect(p1, Input.mousePosition);
+            SelectionBox.DrawScreenRect(rect, new Color(0.8f, 0.8f, 0.95f, 0.25f));
+            SelectionBox.DrawScreenRectBorder(rect, 2, new Color(0.8f, 0.8f, 0.95f));
+        }
+    }
+
+
     public GameObject lastTile;
-    public void Draw(){
-        // Draw Protections
+    bool DrawProtectionCheck(){
+        // Check occupied space
         foreach(GameObject tile in allTiles){
             if(tile.transform.position == snapPos){
-                return;
+                return false;
             }
         }
+        // Check outside board limits
         if(snapPos.x < -boardLimits.x || boardLimits.x < snapPos.x || snapPos.z < -boardLimits.y || boardLimits.y < snapPos.z)
-            return;
+            return false;
         
-        // ------ ADD PROTECTIONS FOR TILE PLACEMENT HERE --------
+        // Check too many neighbors ignoring lastTile
+
+
+        // Check if diagonal to lastTile
+
         
 
+        return true;
+    }
+    
+    public void Draw(){
+        // Draw Protections
+        if(DrawProtectionCheck() == false)
+            return;
+        
         // Spawn tile
         GameObject newTile = Instantiate(tilePrefab, snapPos, Quaternion.identity);
         allTiles.Add(newTile);
         newTile.GetComponent<EditorTile>().parent = lastTile;
         lastTile.GetComponent<EditorTile>().children.Add(newTile);
-        lastTile = newTile;
-        
+        lastTile = newTile; 
     }
 
     void DeleteSelection(){
