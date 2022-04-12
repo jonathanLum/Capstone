@@ -1207,7 +1207,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1383,7 +1383,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1737,7 +1737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1310458570
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2239,7 +2239,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8121136062113231106, guid: 5a29ad8aaa2a2a1468509d1c2ae38102, type: 3}
       propertyPath: m_Name
-      value: Button (1)
+      value: LoadButton
       objectReference: {fileID: 0}
     - target: {fileID: 8121136062113231107, guid: 5a29ad8aaa2a2a1468509d1c2ae38102, type: 3}
       propertyPath: m_Pivot.x
@@ -2327,7 +2327,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121136062113231116, guid: 5a29ad8aaa2a2a1468509d1c2ae38102, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121136062113231116, guid: 5a29ad8aaa2a2a1468509d1c2ae38102, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121136062113231116, guid: 5a29ad8aaa2a2a1468509d1c2ae38102, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5389572274331371387, guid: 4d3f7c0dd4713e04895cdb2f1312e849, type: 3}
+    - target: {fileID: 8121136062113231116, guid: 5a29ad8aaa2a2a1468509d1c2ae38102, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121136062113231116, guid: 5a29ad8aaa2a2a1468509d1c2ae38102, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoToEditor
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121136062113231116, guid: 5a29ad8aaa2a2a1468509d1c2ae38102, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SceneController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121136062113231116, guid: 5a29ad8aaa2a2a1468509d1c2ae38102, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8121136063885960521, guid: 5a29ad8aaa2a2a1468509d1c2ae38102, type: 3}
       propertyPath: m_Text

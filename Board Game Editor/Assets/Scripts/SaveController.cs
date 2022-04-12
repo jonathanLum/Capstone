@@ -24,23 +24,28 @@ public class SaveController : MonoBehaviour
         SaveStruct.Load(so);
         currBoardID = so.saveData.Count;
         //SaveStruct.Save(so);
-        SceneManager.activeSceneChanged += NewBoard;
+        SceneManager.activeSceneChanged += ChangeScene;
     }
 
     public void ResetBoardId(){
         currBoardID = so.saveData.Count;
     }
 
-    void NewBoard(Scene current, Scene next){
+    void ChangeScene(Scene current, Scene next){
         if(next == SceneManager.GetSceneByName("BoardEditor")){
-            if(currBoardID != so.saveData.Count)
-                return;
             ctrl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<EditorController>();
-            GameBoard newBoard = new GameBoard();
-            so.saveData.Add(newBoard);
-            Debug.Log(so.saveData.Count);
-            SaveBoard("default");
-            //Debug.Log("add board");
+            
+            if(currBoardID == so.saveData.Count){
+                // New board
+                GameBoard newBoard = new GameBoard();
+                so.saveData.Add(newBoard);
+                Debug.Log(so.saveData.Count);
+                SaveBoard("default");
+                //Debug.Log("add board");
+            }else{
+                // Load board
+                LoadBoard();
+            }
         }
     }
 
@@ -79,6 +84,7 @@ public class SaveController : MonoBehaviour
             AddChildren(dto);*/
             
             so.saveData[currBoardID].board.Add(dto);
+            Debug.Log("tile added to board");
         }
         
     }
