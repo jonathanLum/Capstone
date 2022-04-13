@@ -12,6 +12,8 @@ public class SaveController : MonoBehaviour
     public int currBoardID = 0;
     
     public EditorController ctrl;
+    public SceneController sceneCtrl;
+
 
     [SerializeField] GameObject editorTilePrefab;
     [SerializeField] GameObject playTilePrefab;
@@ -21,6 +23,7 @@ public class SaveController : MonoBehaviour
     }
 
     void Start(){
+        sceneCtrl = GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>();
         SaveStruct.Load(so);
         currBoardID = so.saveData.Count;
         //SaveStruct.Save(so);
@@ -39,13 +42,15 @@ public class SaveController : MonoBehaviour
                 // New board
                 GameBoard newBoard = new GameBoard();
                 so.saveData.Add(newBoard);
-                Debug.Log(so.saveData.Count);
+                //Debug.Log(so.saveData.Count);
                 SaveBoard("default");
                 //Debug.Log("add board");
             }else{
                 // Load board
                 LoadBoard();
             }
+        }else if(next == SceneManager.GetSceneByName("PlayGame")){
+            LoadBoard();
         }
     }
 
@@ -84,7 +89,7 @@ public class SaveController : MonoBehaviour
             AddChildren(dto);*/
             
             so.saveData[currBoardID].board.Add(dto);
-            Debug.Log("tile added to board");
+            //Debug.Log("tile added to board");
         }
         
     }
@@ -92,12 +97,17 @@ public class SaveController : MonoBehaviour
     
     public void LoadBoard(){
         SaveStruct.Load(so);
-        if(so.saveData[currBoardID] != null){
-            SOToBoard();
+        
+        if(SceneManager.GetActiveScene().name == "BoardEditor"){
+            if(so.saveData[currBoardID] != null){
+                SOToEditBoard();
+            }
+        }else if(SceneManager.GetActiveScene().name == "PlayGame"){
+            SOToPlayBoard();
         }
     }
 
-    void SOToBoard(){
+    void SOToEditBoard(){
         foreach(GameObject tile in ctrl.allTiles.ToArray()){
             ctrl.allTiles.Remove(tile);
             Destroy(tile);
@@ -114,6 +124,12 @@ public class SaveController : MonoBehaviour
             }
             // children
             ctrl.allTiles.Add(newTile);
+        }
+    }
+
+    void SOToPlayBoard(){
+        foreach(DataTransferObject tile in so.saveData[currBoardID].board){
+            // make play tile and set values
         }
     }
 }
