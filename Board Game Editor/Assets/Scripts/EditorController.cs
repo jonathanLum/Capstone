@@ -107,24 +107,50 @@ public class EditorController : MonoBehaviour
     public GameObject lastTile;
     bool DrawProtectionCheck(){
         // Check occupied space
-        foreach(GameObject tile in allTiles){
-            if(tile.transform.position == snapPos){
-                return false;
-            }
-        }
+        if(isOccupied(snapPos))
+            return false;
+
         // Check outside board limits
         if(snapPos.x < -boardLimits.x || boardLimits.x < snapPos.x || snapPos.z < -boardLimits.y || boardLimits.y < snapPos.z)
             return false;
         
         // Check too many neighbors ignoring lastTile
+        if(checkSurroundings(snapPos) == false)
+            return false;
 
-
-        // Check if diagonal to lastTile
-
+        // only allows tile to be drawn 1 away from last tile (prevents diagonally created tiles)
+        if((lastTile.transform.position-snapPos).magnitude > 1)
+            return false;
         
 
         return true;
     }
+    
+    bool isOccupied(Vector3 pos){
+        //check Occupied space
+        foreach(GameObject tile in allTiles){
+            if(tile.transform.position == pos)
+                return true;
+        }
+        return false;
+    }
+
+    bool checkSurroundings(Vector3 pos){
+        //check for tiles surrounding the new tile
+        var right = snapPos + new Vector3 (1,0,0);
+        var left = snapPos + new Vector3 (-1, 0, 0);
+        var up = snapPos + new Vector3 (0, 0, 1);
+        var down = snapPos + new Vector3 (0, 0, -1);
+        if(isOccupied(right) && lastTile.transform.position != right)
+            return false;
+        if(isOccupied(left) && lastTile.transform.position != left)
+            return false;
+        if(isOccupied(up) && lastTile.transform.position != up)
+            return false;
+        if(isOccupied(down) && lastTile.transform.position != down)
+            return false;
+        return true;
+        }
     
     public void Draw(){
         // Draw Protections
