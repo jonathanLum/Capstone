@@ -175,6 +175,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8156856327864377193, guid: 3ba32bd2a4fe0ba4f828e6cac18155a7, type: 3}
+      propertyPath: sceneCtrl
+      value: 
+      objectReference: {fileID: 1883124192}
+    - target: {fileID: 8156856327864377193, guid: 3ba32bd2a4fe0ba4f828e6cac18155a7, type: 3}
       propertyPath: tilePrefab
       value: 
       objectReference: {fileID: 4866374925886155072, guid: e9caba4419c0e2249852986c4a59b338, type: 3}
@@ -209,6 +213,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59af576ff6db2094fabbe2428e0ac0bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1883124192 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5389572274331371387, guid: 4d3f7c0dd4713e04895cdb2f1312e849, type: 3}
+  m_PrefabInstance: {fileID: 191573232433183204}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43c4f4eddb4762a408beeca4e5327c25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &191573232433183204
