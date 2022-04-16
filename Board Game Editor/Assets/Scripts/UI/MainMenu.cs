@@ -13,9 +13,10 @@ public class MainMenu : MonoBehaviour
     public Text boardText;
     // public GameObject playerSelect;
 
-    public GameObject menuEditorOptions;
     public Button buttonEditorOptions;
     public GameObject menuTop;
+    public GameObject menuEditorOptions;
+    public GameObject menuEditorLoadBoard;
 
     public Stack<GameObject> menuStack = new Stack<GameObject>();
 
@@ -26,22 +27,30 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // saveCtrl = GameObject.FindGameObjectWithTag("SaveController");
+        saveCtrl = GameObject.FindGameObjectWithTag("SaveController");
         // boardID.maxValue = saveCtrl.GetComponent<SaveController>().so.saveData.Count - 1;
         // boardID.onValueChanged.AddListener(SetBoardID);
         // SetBoardID(boardID.value);
         // newBoard.onClick.AddListener(saveCtrl.GetComponent<SaveController>().ResetBoardId);
 
-        menuTop.SetActive(true);
+
+        initMenus();
+    }
+
+    private void initMenus()
+    {
         menuEditorOptions.SetActive(false);
-
-        menuStack.Push(menuTop);
-
+        menuEditorLoadBoard.SetActive(false);
+        PushMenu(menuTop);
     }
 
     public void PushMenu(GameObject newMenu)
     {
-        menuStack.Peek().SetActive(false);
+        if (menuStack.Count > 0)
+        {
+            menuStack.Peek().SetActive(false);
+        }
+
         menuStack.Push(newMenu);
         menuStack.Peek().SetActive(true);
     }
@@ -57,14 +66,22 @@ public class MainMenu : MonoBehaviour
         boardText.text = saveCtrl.GetComponent<SaveController>().so.saveData[(int)id].name;
     }
 
-    public void OpenEditorOptions()
+    public void OpenMenuEditorOptions()
     {
         PushMenu(menuEditorOptions);
     }
-    // public void OpenNewBoard(){
-    //     SceneManager.LoadScene("BoardEditor", LoadSceneMode.Single);
 
-    // }
+    public void OpenMenuEditorLoadBoard()
+    {
+        PushMenu(menuEditorLoadBoard);
+    }
+
+    public void OpenNewBoard()
+    {
+        saveCtrl.GetComponent<SaveController>().ResetBoardId();
+        SceneManager.LoadScene("BoardEditor", LoadSceneMode.Single);
+
+    }
 
     // public void OpenBoardOptions(){
     //     boardOptions.SetActive(true);

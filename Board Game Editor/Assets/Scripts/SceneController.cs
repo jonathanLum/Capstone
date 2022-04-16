@@ -8,31 +8,35 @@ public class SceneController : MonoBehaviour
 {
     public SaveController saveCtrl;
 
-    private void Awake() {
+    private void Awake()
+    {
         DontDestroyOnLoad(this.gameObject);
     }
 
     void Start()
     {
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);   
+        SceneManager.LoadScene("MainMenu-WIP", LoadSceneMode.Single);
     }
 
-    public void GoToEditor(){
+    public void GoToEditor()
+    {
         //SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
         SceneManager.LoadScene("BoardEditor", LoadSceneMode.Single);
-        
-    }
-    
 
-    public void GoToMainMenu(){
+    }
+
+
+    public void GoToMainMenu()
+    {
         //SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
-        
+        SceneManager.LoadScene("MainMenu-WIP", LoadSceneMode.Single);
+
     }
 
-    public void GoToPlayGame(){
+    public void GoToPlayGame()
+    {
         //SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
         SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
-        
-    } 
+
+    }
 }
