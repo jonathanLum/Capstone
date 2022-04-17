@@ -6,15 +6,8 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public Button newBoard;
-    // public GameObject boardOptions;
-    // public GameObject boardSelect;
-    public Slider boardID;
-    public Text boardText;
-    // public GameObject playerSelect;
-
-    public Button buttonEditorOptions;
-    public Button buttonLaunchEditor;
+    public GameObject saveCtrl;
+    public SceneController sceneCtrl;
     public GameObject menuTop;
     public GameObject menuEditorOptions;
     public GameObject menuEditorLoadBoard;
@@ -22,13 +15,6 @@ public class MainMenu : MonoBehaviour
     public GameObject menuBoardSelect;
 
     public Stack<GameObject> menuStack = new Stack<GameObject>();
-    public SaveObject saveObject;
-    public GameObject saveCtrl;
-    public SceneController sceneCtrl;
-    private List<GameBoard> boardList;
-
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +22,6 @@ public class MainMenu : MonoBehaviour
         saveCtrl = GameObject.FindGameObjectWithTag("SaveController");
         sceneCtrl = GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>();
 
-        // boardID.maxValue = saveCtrl.GetComponent<SaveController>().so.saveData.Count - 1;
-        // boardID.onValueChanged.AddListener(SetBoardID);
-        // SetBoardID(boardID.value);
-        // newBoard.onClick.AddListener(saveCtrl.GetComponent<SaveController>().ResetBoardId);
         initMenus();
     }
 

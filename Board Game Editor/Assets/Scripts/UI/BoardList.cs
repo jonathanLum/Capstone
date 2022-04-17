@@ -19,7 +19,6 @@ public class BoardList : MonoBehaviour
         saveCtrl = GameObject.FindGameObjectWithTag("SaveController").GetComponent<SaveController>();
         boardList = saveCtrl.so.saveData;
         populateBoardList();
-
     }
 
     // Update is called once per frame
@@ -30,7 +29,6 @@ public class BoardList : MonoBehaviour
 
     public void populateBoardList()
     {
-
         Vector3 position = Vector3.zero;
         foreach (GameBoard board in boardList)
         {
@@ -58,13 +56,7 @@ public class BoardList : MonoBehaviour
 
         // determine index of the list based on calculating the difference
         // between this button and the distance from top of the container.
-
-        Debug.Log(boardListItem.name);
-
         RectTransform rt = boardListItem.GetComponent<RectTransform>();
-        // Debug.Log("position" + rt.position.y);
-        // Debug.Log("anchored position" + rt.anchoredPosition.y);
-        // Debug.Log("anchor pos / size delta" + Math.Abs(rt.anchoredPosition.y / rt.sizeDelta.y));
         currIndex = (int)Math.Abs(rt.anchoredPosition.y / rt.sizeDelta.y);
         saveCtrl.SetBoardID(currIndex);
     }
