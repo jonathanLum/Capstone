@@ -8,10 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Persist.unity
     guid: 2def417b8802519458c3e7d8f5efb2f1
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+  - enabled: 0
+    path: Assets/Scenes/MainMenu - Old.unity
     guid: 4dd48ccae96858243aba39253d1a2fcf
   - enabled: 1
     path: Assets/Scenes/BoardEditor.unity
     guid: b53354fa7fb6bf241bc701e0fb0ac741
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 9a36db99a7bc7607c8023f7a7698cbbc
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

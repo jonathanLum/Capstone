@@ -18,6 +18,8 @@ public class MainMenu : MonoBehaviour
     public GameObject menuTop;
     public GameObject menuEditorOptions;
     public GameObject menuEditorLoadBoard;
+    public GameObject menuPlayerSelect;
+    public GameObject menuBoardSelect;
 
     public Stack<GameObject> menuStack = new Stack<GameObject>();
     public SaveObject saveObject;
@@ -45,6 +47,8 @@ public class MainMenu : MonoBehaviour
     {
         menuEditorOptions.SetActive(false);
         menuEditorLoadBoard.SetActive(false);
+        menuPlayerSelect.SetActive(false);
+        menuBoardSelect.SetActive(false);
         PushMenu(menuTop);
     }
 
@@ -64,11 +68,6 @@ public class MainMenu : MonoBehaviour
         menuStack.Pop().SetActive(false);
         menuStack.Peek().SetActive(true);
     }
-    // void SetBoardID(System.Single id)
-    // {
-    //     saveCtrl.GetComponent<SaveController>().currBoardID = (int)id;
-    //     boardText.text = saveCtrl.GetComponent<SaveController>().so.saveData[(int)id].name;
-    // }
 
     public void OpenMenuEditorOptions()
     {
@@ -91,8 +90,22 @@ public class MainMenu : MonoBehaviour
         sceneCtrl.GoToEditor();
     }
 
+    public void OpenMenuPlayerSelect()
+    {
+        PushMenu(menuPlayerSelect);
+    }
+
+    public void OpenMenuBoardSelect()
+    {
+        PushMenu(menuBoardSelect);
+    }
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void PlayGame()
+    {
+        sceneCtrl.GoToPlayGame();
     }
 }
