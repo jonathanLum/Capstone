@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,19 +47,25 @@ public class BoardList : MonoBehaviour
             TMPro.TextMeshProUGUI text = boardListItemText.GetComponent<TMPro.TextMeshProUGUI>();
             text.text = board.name;
 
-            boardListItem.GetComponent<Button>().onClick.AddListener(updateCurrentBoard);
+            boardListItem.GetComponent<Button>().onClick.AddListener(() => { updateCurrentBoard(boardListItem); });
             boardListItem.SetActive(true);
             position.y -= boardListItem.GetComponent<RectTransform>().sizeDelta.y;
         }
     }
 
-    public void updateCurrentBoard()
+    public void updateCurrentBoard(GameObject boardListItem)
     {
 
         // determine index of the list based on calculating the difference
         // between this button and the distance from top of the container.
 
-        Debug.Log(this.gameObject.GetComponent<RectTransform>().anchoredPosition);
-        // saveCtrl.SetBoardID();
+        Debug.Log(boardListItem.name);
+
+        RectTransform rt = boardListItem.GetComponent<RectTransform>();
+        // Debug.Log("position" + rt.position.y);
+        // Debug.Log("anchored position" + rt.anchoredPosition.y);
+        // Debug.Log("anchor pos / size delta" + Math.Abs(rt.anchoredPosition.y / rt.sizeDelta.y));
+        currIndex = (int)Math.Abs(rt.anchoredPosition.y / rt.sizeDelta.y);
+        saveCtrl.SetBoardID(currIndex);
     }
 }
