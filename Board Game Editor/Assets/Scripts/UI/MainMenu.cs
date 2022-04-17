@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
     // public GameObject playerSelect;
 
     public Button buttonEditorOptions;
+    public Button buttonLaunchEditor;
     public GameObject menuTop;
     public GameObject menuEditorOptions;
     public GameObject menuEditorLoadBoard;
@@ -21,21 +22,22 @@ public class MainMenu : MonoBehaviour
     public Stack<GameObject> menuStack = new Stack<GameObject>();
     public SaveObject saveObject;
     public GameObject saveCtrl;
+    public SceneController sceneCtrl;
     private List<GameBoard> boardList;
+
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        // saveCtrl = new SaveController();
         saveCtrl = GameObject.FindGameObjectWithTag("SaveController");
+        sceneCtrl = GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>();
+
         // boardID.maxValue = saveCtrl.GetComponent<SaveController>().so.saveData.Count - 1;
         // boardID.onValueChanged.AddListener(SetBoardID);
         // SetBoardID(boardID.value);
         // newBoard.onClick.AddListener(saveCtrl.GetComponent<SaveController>().ResetBoardId);
-        boardList = saveCtrl.GetComponent<SaveController>().so.saveData;
-
         initMenus();
     }
 
@@ -62,11 +64,11 @@ public class MainMenu : MonoBehaviour
         menuStack.Pop().SetActive(false);
         menuStack.Peek().SetActive(true);
     }
-    void SetBoardID(System.Single id)
-    {
-        saveCtrl.GetComponent<SaveController>().currBoardID = (int)id;
-        boardText.text = saveCtrl.GetComponent<SaveController>().so.saveData[(int)id].name;
-    }
+    // void SetBoardID(System.Single id)
+    // {
+    //     saveCtrl.GetComponent<SaveController>().currBoardID = (int)id;
+    //     boardText.text = saveCtrl.GetComponent<SaveController>().so.saveData[(int)id].name;
+    // }
 
     public void OpenMenuEditorOptions()
     {
@@ -78,38 +80,16 @@ public class MainMenu : MonoBehaviour
         PushMenu(menuEditorLoadBoard);
     }
 
-    public void OpenNewBoard()
+    public void OpenEditorNewBoard()
     {
         saveCtrl.GetComponent<SaveController>().ResetBoardId();
-        SceneManager.LoadScene("BoardEditor", LoadSceneMode.Single);
-
+        sceneCtrl.GoToEditor();
     }
 
-    public void populateBoardList()
+    public void OpenEditorExistingBoard()
     {
-
-        foreach (GameBoard board in boardList)
-        {
-        }
+        sceneCtrl.GoToEditor();
     }
-
-    // public void OpenBoardOptions(){
-    //     boardOptions.SetActive(true);
-    // }
-
-    // public void OpenBoardSelect(){
-    //     boardSelect.SetActive(true);
-    // }
-
-    // public void OpenPlayerSelect(){
-    //     playerSelect.SetActive(true);
-    // }
-
-    // public void BackButton(){
-    //     boardOptions.SetActive(false);
-    //     boardSelect.SetActive(false);
-    //     playerSelect.SetActive(false);
-    // }
 
     public void QuitGame()
     {
