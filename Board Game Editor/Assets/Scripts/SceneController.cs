@@ -15,7 +15,7 @@ public class SceneController : MonoBehaviour
 
     void Start()
     {
-        SceneManager.LoadScene("MainMenu-WIP", LoadSceneMode.Single);
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
     public void GoToEditor()
@@ -29,7 +29,7 @@ public class SceneController : MonoBehaviour
     public void GoToMainMenu()
     {
         //SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
-        SceneManager.LoadScene("MainMenu-WIP", LoadSceneMode.Single);
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
 
     }
 

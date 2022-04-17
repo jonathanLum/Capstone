@@ -15,7 +15,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2764777510146443639, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
       propertyPath: m_Name
-      value: ButtonBack
+      value: ButtonSmall Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4414396429078482849, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
