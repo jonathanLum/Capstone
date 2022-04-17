@@ -19,20 +19,22 @@ public class MainMenu : MonoBehaviour
     public GameObject menuEditorLoadBoard;
 
     public Stack<GameObject> menuStack = new Stack<GameObject>();
-
-    GameObject saveCtrl;
+    public SaveObject saveObject;
+    public GameObject saveCtrl;
+    private List<GameBoard> boardList;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        // saveCtrl = new SaveController();
         saveCtrl = GameObject.FindGameObjectWithTag("SaveController");
         // boardID.maxValue = saveCtrl.GetComponent<SaveController>().so.saveData.Count - 1;
         // boardID.onValueChanged.AddListener(SetBoardID);
         // SetBoardID(boardID.value);
         // newBoard.onClick.AddListener(saveCtrl.GetComponent<SaveController>().ResetBoardId);
-
+        boardList = saveCtrl.GetComponent<SaveController>().so.saveData;
 
         initMenus();
     }
@@ -81,6 +83,14 @@ public class MainMenu : MonoBehaviour
         saveCtrl.GetComponent<SaveController>().ResetBoardId();
         SceneManager.LoadScene("BoardEditor", LoadSceneMode.Single);
 
+    }
+
+    public void populateBoardList()
+    {
+
+        foreach (GameBoard board in boardList)
+        {
+        }
     }
 
     // public void OpenBoardOptions(){
