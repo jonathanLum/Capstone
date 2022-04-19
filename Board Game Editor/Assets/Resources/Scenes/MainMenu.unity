@@ -499,7 +499,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2039176730}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -790,6 +790,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonBack
       objectReference: {fileID: 0}
+    - target: {fileID: 6357644298547118740, guid: 0079d14faf2fd36ab95ea0401b862450, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 55b9bd32e92c8f1429af278fcce16b1f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0079d14faf2fd36ab95ea0401b862450, type: 3}
 --- !u!224 &440616360 stripped
@@ -1205,7 +1209,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1157691488}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1347,6 +1351,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonBack
       objectReference: {fileID: 0}
+    - target: {fileID: 6357644298547118740, guid: 0079d14faf2fd36ab95ea0401b862450, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 55b9bd32e92c8f1429af278fcce16b1f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0079d14faf2fd36ab95ea0401b862450, type: 3}
 --- !u!224 &697939693 stripped
@@ -1680,6 +1688,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonQuit
       objectReference: {fileID: 0}
+    - target: {fileID: 3131543592791175767, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0bc47116a42ec364bad10636a3023bd2, type: 3}
     - target: {fileID: 4414396429078482849, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -2376,6 +2388,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonBack
       objectReference: {fileID: 0}
+    - target: {fileID: 6357644298547118740, guid: 0079d14faf2fd36ab95ea0401b862450, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 55b9bd32e92c8f1429af278fcce16b1f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0079d14faf2fd36ab95ea0401b862450, type: 3}
 --- !u!1 &1077326793
@@ -3608,6 +3624,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonLaunchEditor
       objectReference: {fileID: 0}
+    - target: {fileID: 3131543592791175767, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b0c8311c0ba3eb241b4ef74d120099e8, type: 3}
     - target: {fileID: 4414396429078482849, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -4265,6 +4285,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonBoardSelect
       objectReference: {fileID: 0}
+    - target: {fileID: 6357644298547118740, guid: 0079d14faf2fd36ab95ea0401b862450, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b0c8311c0ba3eb241b4ef74d120099e8, type: 3}
     - target: {fileID: 8574662628557284374, guid: 0079d14faf2fd36ab95ea0401b862450, type: 3}
       propertyPath: m_text
       value: 'Board
@@ -4293,6 +4317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonPlayGame
       objectReference: {fileID: 0}
+    - target: {fileID: 3131543592791175767, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b0c8311c0ba3eb241b4ef74d120099e8, type: 3}
     - target: {fileID: 4414396429078482849, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -5825,6 +5853,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonBack
       objectReference: {fileID: 0}
+    - target: {fileID: 6357644298547118740, guid: 0079d14faf2fd36ab95ea0401b862450, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 55b9bd32e92c8f1429af278fcce16b1f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0079d14faf2fd36ab95ea0401b862450, type: 3}
 --- !u!1001 &6948599545056822836

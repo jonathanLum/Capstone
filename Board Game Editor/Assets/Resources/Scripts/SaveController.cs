@@ -81,15 +81,7 @@ public class SaveController : MonoBehaviour
             DataTransferObject dto = new DataTransferObject();
             var childList = tile.GetComponent<EditorTile>().children;
             dto.position = tile.transform.position;
-            if(childList.Count > 0){
-                if(tile.GetComponent<EditorTile>().effect == EffectTypeEnum.Types.End){
-                    dto.effect = EffectTypeEnum.Types.None;
-                }else{
-                    dto.effect = tile.GetComponent<EditorTile>().effect;
-                }
-            }else{
-                dto.effect = EffectTypeEnum.Types.End;
-            }
+            dto.effect = tile.GetComponent<EditorTile>().effect;
             dto.effectValue = tile.GetComponent<EditorTile>().effectValue;
 #nullable enable
             GameObject? parentObj = tile.GetComponent<EditorTile>().parent;
@@ -178,27 +170,27 @@ public class SaveController : MonoBehaviour
                     break;
                 case EffectTypeEnum.Types.Start:
                     newTile.GetComponent<Tile>().effect = null;
-                    newTile.GetComponent<Tile>().icon = null; // add start icon
+                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("Textures/StartIcon");
                     break;
                 case EffectTypeEnum.Types.End:
                     newTile.GetComponent<Tile>().effect = null;
-                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("UI/Art/FinishIcon");
+                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("Textures/FinishIcon");
                     break;
                 case EffectTypeEnum.Types.Move:
                     newTile.GetComponent<Tile>().effect = ScriptableObject.CreateInstance<MoveEffect>();
-                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("UI/Art/MoveIcon");
+                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("Textures/MoveIcon");
                     break;
                 case EffectTypeEnum.Types.MoveRandom:
                     newTile.GetComponent<Tile>().effect = ScriptableObject.CreateInstance<MoveRandomEffect>();
-                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("UI/Art/RandomIcon");
+                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("Textures/RandomIcon");
                     break;
                 case EffectTypeEnum.Types.Trap:
                     newTile.GetComponent<Tile>().effect = ScriptableObject.CreateInstance<TrapEffect>();
-                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("UI/Art/TrapIcon");
+                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("Textures/TrapIcon");
                     break;
                 case EffectTypeEnum.Types.Attack:
                     newTile.GetComponent<Tile>().effect = ScriptableObject.CreateInstance<AttackEffect>();
-                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("UI/Art/AttackIcon");
+                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("Textures/AttackIcon");
                     break;
             }
             if (tile.parent == -1)

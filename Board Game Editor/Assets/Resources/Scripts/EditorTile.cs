@@ -20,11 +20,12 @@ public class EditorTile : MonoBehaviour, EffectTypeEnum
 
     public GameObject parent;
     public List<GameObject> children;
-
+    Renderer rend;
     
     // Start is called before the first frame update
     void Start()
     {
+        rend = gameObject.GetComponentInChildren<Renderer>();
         ctrl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<EditorController>();
         numberText = GetComponentInChildren<TMP_Text>();
         if(parent != null){
@@ -32,26 +33,31 @@ public class EditorTile : MonoBehaviour, EffectTypeEnum
             numberText.text = number.ToString();
         }else{
             numberText.text = "Start";
+            effect = EffectTypeEnum.Types.Start;
         }
-        SetColor();
+        SetIcon();
     }
 
     void Update() {
         if(ctrl.selection.Contains(gameObject)){
             selected = true;
+            rend.material.SetInt("_Highlight", 1);
         }
         else{
             selected = false;
+            rend.material.SetInt("_Highlight", 0);
         }
         
-        if(children.Count > 0){
-            if(effect == EffectTypeEnum.Types.End){
-                effect = EffectTypeEnum.Types.None;
+        if(effect != EffectTypeEnum.Types.Start){
+            if(children.Count > 0){
+                if(effect == EffectTypeEnum.Types.End){
+                    effect = EffectTypeEnum.Types.None;
+                }
+            }else{
+                effect = EffectTypeEnum.Types.End;
             }
-        }else{
-            effect = EffectTypeEnum.Types.End;
+            SetIcon();
         }
-        SetColor();
     }
 
 
@@ -66,43 +72,31 @@ public class EditorTile : MonoBehaviour, EffectTypeEnum
         dragging = false;
     }
 
-    private void OnDestroy() {
-        
-    }
-
-    public void SetColor(){
-        var renderer = gameObject.GetComponentInChildren<Renderer>();
+    public void SetIcon(){
         switch(effect)
         {
             case EffectTypeEnum.Types.None:
                 icon = null;
                 break;
             case EffectTypeEnum.Types.Start:
-                icon = null; // add start icon
+                icon = (Texture2D)Resources.Load("Textures/StartIcon");
                 break;
             case EffectTypeEnum.Types.End:
-                icon = (Texture2D)Resources.Load("UI/Art/FinishIcon");
+                icon = (Texture2D)Resources.Load("Textures/FinishIcon");
                 break;
             case EffectTypeEnum.Types.Move:
-                icon = (Texture2D)Resources.Load("UI/Art/MoveIcon");
+                icon = (Texture2D)Resources.Load("Textures/MoveIcon");
                 break;
             case EffectTypeEnum.Types.MoveRandom:
-                icon = (Texture2D)Resources.Load("UI/Art/RandomIcon");
+                icon = (Texture2D)Resources.Load("Textures/RandomIcon");
                 break;
             case EffectTypeEnum.Types.Trap:
-                icon = (Texture2D)Resources.Load("UI/Art/TrapIcon");
+                icon = (Texture2D)Resources.Load("Textures/TrapIcon");
                 break;
             case EffectTypeEnum.Types.Attack:
-                icon = (Texture2D)Resources.Load("UI/Art/AttackIcon");
+                icon = (Texture2D)Resources.Load("Textures/AttackIcon");
                 break;
         }
         iconPlane.GetComponent<Renderer>().material.SetTexture("_Texture2D", icon);
-        if(selected){
-            renderer.material.SetInt("_Highlight", 1);
-        }
-        else{
-            renderer.material.SetInt("_Highlight", 0);
-        }
     }
-  
 }
