@@ -37,7 +37,7 @@ public class DraggableButton : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     }
 
     public void OnEndDrag(PointerEventData eventData){
-        Debug.Log("OnEndDrag");
+        //Debug.Log("OnEndDrag");
         rectTransform.position = originalPosition;
         onAddEffect.Invoke(effect);
     }

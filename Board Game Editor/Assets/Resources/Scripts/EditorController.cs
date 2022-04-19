@@ -71,7 +71,6 @@ public class EditorController : MonoBehaviour
     }
 
     void AddToSelection(GameObject tile){
-        
         foreach(GameObject child in tile.GetComponent<EditorTile>().children){
             AddToSelection(child);
         }
@@ -80,7 +79,6 @@ public class EditorController : MonoBehaviour
     }
 
     void RemoveFromSelection(GameObject tile){
-        
         if(tile.GetComponent<EditorTile>().parent)
             RemoveFromSelection(tile.GetComponent<EditorTile>().parent);
         selection.Remove(tile);
@@ -107,6 +105,22 @@ public class EditorController : MonoBehaviour
                 if(minZ < tile.transform.position.z + 0.5 && tile.transform.position.z + 0.5 < maxZ){
                     AddToSelection(tile);
                 }
+            }
+        }
+    }
+
+    void DeleteSelection(){
+        foreach(GameObject tile in selection.ToArray()){
+            if(!tile.CompareTag("Start")){
+                #nullable enable
+                GameObject? parent = tile.GetComponent<EditorTile>().parent;
+                if(parent != null){
+                    selection.Remove(tile);
+                    allTiles.Remove(tile);
+                    parent.GetComponent<EditorTile>().children.Remove(tile);
+                    Destroy(tile);
+                }
+                #nullable disable
             }
         }
     }
@@ -138,7 +152,6 @@ public class EditorController : MonoBehaviour
         if((lastTile.transform.position-snapPos).magnitude > 1)
             return false;
         
-
         return true;
     }
     
@@ -166,7 +179,7 @@ public class EditorController : MonoBehaviour
         if(isOccupied(down) && lastTile.transform.position != down)
             return false;
         return true;
-        }
+    }
     
     public void Draw(){
         // Draw Protections
@@ -181,21 +194,6 @@ public class EditorController : MonoBehaviour
         lastTile = newTile; 
     }
 
-    void DeleteSelection(){
-        foreach(GameObject tile in selection.ToArray()){
-            if(!tile.CompareTag("Start")){
-                selection.Remove(tile);
-                allTiles.Remove(tile);
-                #nullable enable
-                GameObject? parent = tile.GetComponent<EditorTile>().parent;
-                if(parent != null)
-                    parent.GetComponent<EditorTile>().children.Remove(tile);
-                #nullable disable
-                Destroy(tile);
-            }
-        }
-    }
-
     public void AddEffect(EffectTypeEnum.Types effect){
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -208,6 +206,5 @@ public class EditorController : MonoBehaviour
                 }
             }
         }
-        //Debug.Log("Add Effect");
     }
 }

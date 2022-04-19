@@ -16,8 +16,10 @@ public class Tile : MonoBehaviour
         iconPlane.GetComponent<Renderer>().material.SetTexture("_Texture2D", icon);
     }
 
-    public void LandedOn(Player target){
-        effect.Apply(target);
+    public void LandedOn(GameManager gameManager){
+        if(effect != null){
+            effect.Apply(gameManager, effectValue);
+        }
     }
 
     public Vector3 GetLocation(){

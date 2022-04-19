@@ -8,7 +8,6 @@ using System.Linq;
 public class SaveController : MonoBehaviour
 {
     public SaveObject so;
-    //public GameBoard gameBoard;
     public int currBoardID = 0;
 
     public EditorController ctrl;
@@ -29,7 +28,6 @@ public class SaveController : MonoBehaviour
         sceneCtrl = GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>();
         SaveStruct.Load(so);
         currBoardID = so.saveData.Count;
-        //SaveStruct.Save(so);
         SceneManager.activeSceneChanged += ChangeScene;
     }
 
@@ -49,13 +47,10 @@ public class SaveController : MonoBehaviour
                 // New board
                 GameBoard newBoard = new GameBoard();
                 so.saveData.Add(newBoard);
-                //Debug.Log(so.saveData.Count);
                 SaveBoard("default");
-                //Debug.Log("add board");
             }
             else
             {
-                // Load board
                 LoadBoard();
             }
         }
@@ -74,7 +69,6 @@ public class SaveController : MonoBehaviour
 
     void BoardToSO(string name)
     {
-        //Debug.Log(so.saveData.Count);
         so.saveData[currBoardID].board.Clear();
 
         so.saveData[currBoardID].name = name;
@@ -111,7 +105,6 @@ public class SaveController : MonoBehaviour
             }
 
             so.saveData[currBoardID].board.Add(dto);
-            //Debug.Log("tile added to board");
         }
 
     }
@@ -193,11 +186,19 @@ public class SaveController : MonoBehaviour
                     break;
                 case EffectTypeEnum.Types.Move:
                     newTile.GetComponent<Tile>().effect = ScriptableObject.CreateInstance<MoveEffect>();
-                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("UI/Art/TrapIcon");
+                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("UI/Art/MoveIcon");
                     break;
                 case EffectTypeEnum.Types.MoveRandom:
                     newTile.GetComponent<Tile>().effect = ScriptableObject.CreateInstance<MoveRandomEffect>();
+                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("UI/Art/RandomIcon");
+                    break;
+                case EffectTypeEnum.Types.Trap:
+                    newTile.GetComponent<Tile>().effect = ScriptableObject.CreateInstance<TrapEffect>();
                     newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("UI/Art/TrapIcon");
+                    break;
+                case EffectTypeEnum.Types.Attack:
+                    newTile.GetComponent<Tile>().effect = ScriptableObject.CreateInstance<AttackEffect>();
+                    newTile.GetComponent<Tile>().icon = (Texture2D)Resources.Load("UI/Art/AttackIcon");
                     break;
             }
             if (tile.parent == -1)
@@ -223,7 +224,6 @@ public class SaveController : MonoBehaviour
     public void SetBoardID(System.Single id)
     {
         currBoardID = (int)id;
-        // boardText.text = saveCtrl.GetComponent<SaveController>().so.saveData[(int)id].name;
     }
 
 
