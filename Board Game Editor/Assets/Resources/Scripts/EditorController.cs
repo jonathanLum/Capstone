@@ -20,12 +20,7 @@ public class EditorController : MonoBehaviour
 
     public List<GameObject> selection;
     public List<GameObject> allTiles;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        allTiles.Add(GameObject.FindGameObjectWithTag("Start"));
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -111,17 +106,13 @@ public class EditorController : MonoBehaviour
 
     void DeleteSelection(){
         foreach(GameObject tile in selection.ToArray()){
-            if(!tile.CompareTag("Start")){
-                #nullable enable
-                GameObject? parent = tile.GetComponent<EditorTile>().parent;
-                if(parent != null){
+                if(tile.GetComponent<EditorTile>().effect != EffectTypeEnum.Types.Start){
                     selection.Remove(tile);
                     allTiles.Remove(tile);
+                    GameObject parent = tile.GetComponent<EditorTile>().parent;
                     parent.GetComponent<EditorTile>().children.Remove(tile);
                     Destroy(tile);
                 }
-                #nullable disable
-            }
         }
     }
 
@@ -202,7 +193,6 @@ public class EditorController : MonoBehaviour
             if(hitObject.CompareTag("Tile") && hitObject.GetComponent<EditorTile>().effect != EffectTypeEnum.Types.Start){
                 if(hitObject.GetComponent<EditorTile>().children.Count > 0){
                     hitObject.GetComponent<EditorTile>().effect = effect;
-                    hitObject.GetComponent<EditorTile>().SetColor();
                 }
             }
         }

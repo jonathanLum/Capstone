@@ -8,6 +8,8 @@ public class EditorTile : MonoBehaviour, EffectTypeEnum
     EditorController ctrl;
     Vector3 snapPos;
 
+    public Texture2D icon;
+    public GameObject iconPlane;
     TMP_Text numberText;
     int number = 0;
     
@@ -37,30 +39,19 @@ public class EditorTile : MonoBehaviour, EffectTypeEnum
     void Update() {
         if(ctrl.selection.Contains(gameObject)){
             selected = true;
-            SetColor();
         }
         else{
             selected = false;
-            SetColor();
         }
         
-
-        // Move tile
-        /*if(Input.GetMouseButton(1)){
-            if(ctrl.mouseLoc.x < gameObject.transform.position.x+1 &&
-             ctrl.mouseLoc.x > gameObject.transform.position.x &&
-             ctrl.mouseLoc.z < gameObject.transform.position.z+1 &&
-             ctrl.mouseLoc.z > gameObject.transform.position.z){
-                // mouse is over tile
-                //selected = true;
+        if(children.Count > 0){
+            if(effect == EffectTypeEnum.Types.End){
+                effect = EffectTypeEnum.Types.None;
             }
-            if(selected){
-                Debug.Log("move tile");
-                snapPos.x = Mathf.RoundToInt(ctrl.mouseLoc.x - 0.5f); 
-                snapPos.z = Mathf.RoundToInt(ctrl.mouseLoc.z - 0.5f);
-                gameObject.transform.position = snapPos;
-            }
-        }*/
+        }else{
+            effect = EffectTypeEnum.Types.End;
+        }
+        SetColor();
     }
 
 
@@ -81,17 +72,31 @@ public class EditorTile : MonoBehaviour, EffectTypeEnum
 
     public void SetColor(){
         var renderer = gameObject.GetComponentInChildren<Renderer>();
-        switch(effect){
+        switch(effect)
+        {
             case EffectTypeEnum.Types.None:
-                renderer.material.color = Color.white;
+                icon = null;
+                break;
+            case EffectTypeEnum.Types.Start:
+                icon = null; // add start icon
+                break;
+            case EffectTypeEnum.Types.End:
+                icon = (Texture2D)Resources.Load("UI/Art/FinishIcon");
                 break;
             case EffectTypeEnum.Types.Move:
-                renderer.material.color = Color.green;
+                icon = (Texture2D)Resources.Load("UI/Art/MoveIcon");
                 break;
             case EffectTypeEnum.Types.MoveRandom:
-                renderer.material.color = Color.yellow;
+                icon = (Texture2D)Resources.Load("UI/Art/RandomIcon");
+                break;
+            case EffectTypeEnum.Types.Trap:
+                icon = (Texture2D)Resources.Load("UI/Art/TrapIcon");
+                break;
+            case EffectTypeEnum.Types.Attack:
+                icon = (Texture2D)Resources.Load("UI/Art/AttackIcon");
                 break;
         }
+        iconPlane.GetComponent<Renderer>().material.SetTexture("_Texture2D", icon);
         if(selected){
             renderer.material.SetInt("_Highlight", 1);
         }

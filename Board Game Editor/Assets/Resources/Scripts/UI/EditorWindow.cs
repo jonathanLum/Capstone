@@ -27,5 +27,6 @@ public class EditorWindow : MonoBehaviour
 
     void PromptQuit(){
         Debug.Log("Unsaved progress will be lost");
+        GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>().GoToMainMenu();
     }
 }

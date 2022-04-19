@@ -46,13 +46,16 @@ public class SaveController : MonoBehaviour
             {
                 // New board
                 GameBoard newBoard = new GameBoard();
+                newBoard.name = "Default";
+                var startTile = new DataTransferObject();
+                startTile.position = new Vector3(0, 0, 0);
+                startTile.effect = EffectTypeEnum.Types.Start;
+                startTile.parent = -1;
+                newBoard.board.Add(startTile);
                 so.saveData.Add(newBoard);
-                SaveBoard("default");
+                SaveStruct.Save(so);
             }
-            else
-            {
-                LoadBoard();
-            }
+            LoadBoard();
         }
         else if (next == SceneManager.GetSceneByName("PlayGame"))
         {
@@ -116,10 +119,7 @@ public class SaveController : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "BoardEditor")
         {
-            if (so.saveData[currBoardID] != null)
-            {
-                SOToEditBoard();
-            }
+            SOToEditBoard();
         }
         else if (SceneManager.GetActiveScene().name == "PlayGame")
         {

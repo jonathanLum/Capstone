@@ -23,8 +23,6 @@ public class DraggableButton : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     void Awake(){
         rectTransform = GetComponent<RectTransform>();
         originalPosition = rectTransform.position;
-        
-        onAddEffect.AddListener(GameObject.FindGameObjectWithTag("MainCamera").GetComponent<EditorController>().AddEffect);
     }
 
     public void OnBeginDrag(PointerEventData eventData){
