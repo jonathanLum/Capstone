@@ -9,12 +9,23 @@ public class PlayerSelect : MonoBehaviour
     public int playerCount;
     public List<GameObject> pieceSelectors;
     public GameObject playerCountSelect;
+    public List<Material> pieceColors;
+
+    public Stack<Material> availablePieceColors;
+
+    public List<Material> selectedPieceColors;
 
     // Start is called before the first frame update
     void Start()
     {
         playerCount = 4;
         SetPlayerCount(playerCount);
+        availablePieceColors = new Stack<Material>(pieceColors);
+
+        foreach (GameObject pieceSelector in pieceSelectors)
+        {
+            pieceSelector.GetComponentInChildren<Image>().material = availablePieceColors.Pop();
+        }
     }
 
     // Update is called once per frame
