@@ -8,23 +8,44 @@ public class PlayerSelect : MonoBehaviour
     public TMPro.TextMeshProUGUI textPlayerCount;
     public int playerCount;
     public List<GameObject> pieceSelectors;
+    public List<GameObject> activePieceSelectors;
     public GameObject playerCountSelect;
     public List<Material> pieceColors;
 
-    public Stack<Material> availablePieceColors;
+    public LinkedList<Material> availablePieceColors;
 
     public List<Material> selectedPieceColors;
+
+    public enum DIRECTION { LEFT, RIGHT };
 
     // Start is called before the first frame update
     void Start()
     {
-        playerCount = 4;
-        SetPlayerCount(playerCount);
-        availablePieceColors = new Stack<Material>(pieceColors);
+        SetPlayerCount(4);
+        availablePieceColors = new LinkedList<Material>(pieceColors);
 
         foreach (GameObject pieceSelector in pieceSelectors)
         {
-            pieceSelector.GetComponentInChildren<Image>().material = availablePieceColors.Pop();
+            AddColorToPiece(pieceSelector);
+
+            Button[] buttons = pieceSelector.GetComponentsInChildren<Button>();
+            foreach (Button button in buttons)
+            {
+                DIRECTION direction;
+
+                if (button.name == "ButtonArrowLeft")
+                {
+                    direction = DIRECTION.LEFT;
+                }
+
+                else
+                {
+                    direction = DIRECTION.RIGHT;
+                }
+
+                button.onClick.AddListener(() => { ChangeColor(pieceSelector, direction); });
+
+            }
         }
     }
 
@@ -33,38 +54,39 @@ public class PlayerSelect : MonoBehaviour
     {
 
     }
-    void ChangeDisplay(int value)
+
+    void ChangeColorSelection()
     {
-        switch (value)
-        {
-            case 1:
-                pieceSelectors[0].SetActive(true);
-                pieceSelectors[1].SetActive(false);
-                pieceSelectors[2].SetActive(false);
-                pieceSelectors[3].SetActive(false);
-                break;
-            case 2:
-                pieceSelectors[0].SetActive(true);
-                pieceSelectors[1].SetActive(true);
-                pieceSelectors[2].SetActive(false);
-                pieceSelectors[3].SetActive(false);
-                break;
-            case 3:
-                pieceSelectors[0].SetActive(true);
-                pieceSelectors[1].SetActive(true);
-                pieceSelectors[2].SetActive(true);
-                pieceSelectors[3].SetActive(false);
-                break;
-            case 4:
-                pieceSelectors[0].SetActive(true);
-                pieceSelectors[1].SetActive(true);
-                pieceSelectors[2].SetActive(true);
-                pieceSelectors[3].SetActive(true);
-                break;
-        }
 
     }
+    void ChangeDisplay(int value)
+    {
 
+        foreach (GameObject piece in pieceSelectors)
+        {
+            if (pieceSelectors.IndexOf(piece) < value)
+            {
+                piece.SetActive(true);
+                if (!(activePieceSelectors.Contains(piece)))
+                {
+                    activePieceSelectors.Add(piece);
+                }
+            }
+            else
+            {
+                piece.SetActive(false);
+                activePieceSelectors.Remove(piece);
+            }
+        }
+    }
+
+    public void AddColorToPiece(GameObject piece)
+    {
+        Image image = piece.GetComponentInChildren<Image>();
+        image.material = availablePieceColors.Last.Value;
+        availablePieceColors.RemoveLast();
+        selectedPieceColors.Add(image.material);
+    }
     public void DecrementPlayerCount()
     {
         if (playerCount > 1)
@@ -86,5 +108,30 @@ public class PlayerSelect : MonoBehaviour
         playerCount = value;
         textPlayerCount.text = value.ToString();
         ChangeDisplay((int)value);
+    }
+
+    public void ChangeColor(GameObject pieceSelector, DIRECTION direction)
+    {
+        Material nextMaterial = availablePieceColors.Last.Value;
+        Material currentMaterial = pieceSelector.GetComponentInChildren<Image>().material;
+
+        switch (direction)
+        {
+            case DIRECTION.LEFT:
+                nextMaterial = availablePieceColors.First.Value;
+                availablePieceColors.RemoveFirst();
+                availablePieceColors.AddLast(currentMaterial);
+                break;
+
+            case DIRECTION.RIGHT:
+                nextMaterial = availablePieceColors.Last.Value;
+                availablePieceColors.RemoveLast();
+                availablePieceColors.AddFirst(currentMaterial);
+                break;
+        }
+
+
+        pieceSelector.GetComponentInChildren<Image>().material = nextMaterial;
+
     }
 }
