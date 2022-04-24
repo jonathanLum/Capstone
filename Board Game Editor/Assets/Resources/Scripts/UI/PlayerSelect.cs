@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerSelect : MonoBehaviour
 {
+    public SaveController saveCtrl;
+
     public TMPro.TextMeshProUGUI textPlayerCount;
     public int playerCount;
     public GameObject playerCountSelect;
@@ -22,6 +24,7 @@ public class PlayerSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        saveCtrl = GameObject.FindGameObjectWithTag("SaveController").GetComponent<SaveController>();
         availablePieceColors = new LinkedList<Material>(pieceColors);
         SetPlayerCount(4);
         InitButtonColorSelect();
@@ -83,6 +86,8 @@ public class PlayerSelect : MonoBehaviour
                 activePieceSelectors.Remove(piece);
             }
         }
+
+        saveCtrl.UpdatePieceColors(selectedPieceColors);
     }
 
     public void InitColorToPiece(GameObject piece)
@@ -132,6 +137,7 @@ public class PlayerSelect : MonoBehaviour
         playerCount = value;
         textPlayerCount.text = value.ToString();
         ChangeDisplay((int)value);
+        saveCtrl.SetPlayerCount(value);
     }
 
     public void ChangeColor(GameObject pieceSelector, DIRECTION direction)
