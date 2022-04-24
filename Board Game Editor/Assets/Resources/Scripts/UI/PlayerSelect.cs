@@ -7,12 +7,13 @@ public class PlayerSelect : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI textPlayerCount;
     public int playerCount;
+    public GameObject playerCountSelect;
+
     public List<GameObject> pieceSelectors;
     public List<GameObject> activePieceSelectors;
-    public GameObject playerCountSelect;
     public List<Material> pieceColors;
 
-    [SerializeField] LinkedList<Material> availablePieceColors;
+    public LinkedList<Material> availablePieceColors;
 
     public List<Material> selectedPieceColors;
 
@@ -87,8 +88,7 @@ public class PlayerSelect : MonoBehaviour
     public void InitColorToPiece(GameObject piece)
     {
         Image image = piece.GetComponentInChildren<Image>();
-        // Debug.Log(image.material.ToString());
-        // Debug.Log(image.defaultMaterial);
+
         if (image.material == image.defaultMaterial)
         {
             image.material = availablePieceColors.Last.Value;
