@@ -12,7 +12,7 @@ public class PlayerSelect : MonoBehaviour
     public GameObject playerCountSelect;
     public List<Material> pieceColors;
 
-    public LinkedList<Material> availablePieceColors;
+    [SerializeField] LinkedList<Material> availablePieceColors;
 
     public List<Material> selectedPieceColors;
 
@@ -21,12 +21,22 @@ public class PlayerSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetPlayerCount(4);
         availablePieceColors = new LinkedList<Material>(pieceColors);
+        SetPlayerCount(4);
+        InitButtonColorSelect();
+    }
 
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    void InitButtonColorSelect()
+    {
         foreach (GameObject pieceSelector in pieceSelectors)
         {
-            AddColorToPiece(pieceSelector);
 
             Button[] buttons = pieceSelector.GetComponentsInChildren<Button>();
             foreach (Button button in buttons)
@@ -49,16 +59,6 @@ public class PlayerSelect : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    void ChangeColorSelection()
-    {
-
-    }
     void ChangeDisplay(int value)
     {
 
@@ -66,7 +66,10 @@ public class PlayerSelect : MonoBehaviour
         {
             if (pieceSelectors.IndexOf(piece) < value)
             {
+
                 piece.SetActive(true);
+                InitColorToPiece(piece);
+
                 if (!(activePieceSelectors.Contains(piece)))
                 {
                     activePieceSelectors.Add(piece);
@@ -75,17 +78,38 @@ public class PlayerSelect : MonoBehaviour
             else
             {
                 piece.SetActive(false);
+                RemoveColorFromPiece(piece);
                 activePieceSelectors.Remove(piece);
             }
         }
     }
 
-    public void AddColorToPiece(GameObject piece)
+    public void InitColorToPiece(GameObject piece)
     {
         Image image = piece.GetComponentInChildren<Image>();
-        image.material = availablePieceColors.Last.Value;
-        availablePieceColors.RemoveLast();
-        selectedPieceColors.Add(image.material);
+        // Debug.Log(image.material.ToString());
+        // Debug.Log(image.defaultMaterial);
+        if (image.material == image.defaultMaterial)
+        {
+            image.material = availablePieceColors.Last.Value;
+            availablePieceColors.RemoveLast();
+            selectedPieceColors.Add(image.material);
+        }
+
+    }
+
+    public void RemoveColorFromPiece(GameObject piece)
+    {
+        Image image = piece.GetComponentInChildren<Image>();
+
+        if (image.material != image.defaultMaterial)
+        {
+            availablePieceColors.AddLast(image.material);
+            selectedPieceColors.Remove(image.material);
+            image.material = image.defaultMaterial;
+
+        }
+
     }
     public void DecrementPlayerCount()
     {
