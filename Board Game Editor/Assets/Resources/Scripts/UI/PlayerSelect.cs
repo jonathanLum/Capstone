@@ -26,6 +26,8 @@ public class PlayerSelect : MonoBehaviour
     {
         saveCtrl = GameObject.FindGameObjectWithTag("SaveController").GetComponent<SaveController>();
         availablePieceColors = new LinkedList<Material>(pieceColors);
+        selectedPieceColors = new List<Material> { null, null, null, null };
+
         SetPlayerCount(4);
         InitButtonColorSelect();
     }
@@ -97,8 +99,9 @@ public class PlayerSelect : MonoBehaviour
         if (image.material == image.defaultMaterial)
         {
             image.material = availablePieceColors.Last.Value;
+            image.color = image.material.color;
             availablePieceColors.RemoveLast();
-            selectedPieceColors.Add(image.material);
+            selectedPieceColors[pieceSelectors.IndexOf(piece)] = image.material;
         }
 
     }
@@ -110,7 +113,7 @@ public class PlayerSelect : MonoBehaviour
         if (image.material != image.defaultMaterial)
         {
             availablePieceColors.AddLast(image.material);
-            selectedPieceColors.Remove(image.material);
+            selectedPieceColors[pieceSelectors.IndexOf(piece)] = image.defaultMaterial;
             image.material = image.defaultMaterial;
 
         }
@@ -162,6 +165,8 @@ public class PlayerSelect : MonoBehaviour
 
 
         pieceSelector.GetComponentInChildren<Image>().material = nextMaterial;
+        pieceSelector.GetComponentInChildren<Image>().color = nextMaterial.color;
+        selectedPieceColors[pieceSelectors.IndexOf(pieceSelector)] = nextMaterial;
 
     }
 }
