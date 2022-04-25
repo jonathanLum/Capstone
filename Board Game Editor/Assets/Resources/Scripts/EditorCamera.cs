@@ -3,22 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EditorCamera : MonoBehaviour
-{
-    public float rotationSpeed = 5;
+ {
+     public float panSpeed = 5f;
+     public Vector2 panLimit;
 
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+     public float scrollSpeed = 20f;
+     public float minY = 5f;
+     public float maxX = 12f;
+ 
+     void Update()
+     {
+         Vector3 pos = transform.position;
 
-    // Update is called once per frame
-    void Update(){
-        if(Input.GetMouseButton(2)){
-            // if holding middle click
-            transform.eulerAngles += rotationSpeed * new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
-        }
+         if (Input.GetKey("w"))
+         {
+             pos.z += panSpeed * Time.deltaTime;
+         }
+         if (Input.GetKey("s"))
+         {
+             pos.z -= panSpeed * Time.deltaTime;
+         }
+         if (Input.GetKey("d"))
+         {
+             pos.x += panSpeed * Time.deltaTime;
+         }
+         if (Input.GetKey("a"))
+         {
+             pos.x -= panSpeed * Time.deltaTime;
+         }
+         
+         float scroll = Input.GetAxis("Mouse ScrollWheel");
+         pos.y -= scroll * scrollSpeed * 17f * Time.deltaTime;
+         
+         pos.y = Mathf.Clamp(pos.y, minY, maxX);
+         pos.x = Mathf.Clamp(pos.x, -panLimit.x, panLimit.x);
+         pos.z = Mathf.Clamp(pos.z, -panLimit.y, panLimit.y);
 
-    }
-}
+         transform.position = pos;
+     }
+ }
