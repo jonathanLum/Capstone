@@ -41,14 +41,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log(players);
     }
 
-    void Update()
-    {
-        // wait for player to roll dice
-
-        // take turn
-        //TakeTurn();
-        
-    }
+    
 
 
     void TakeTurn(){

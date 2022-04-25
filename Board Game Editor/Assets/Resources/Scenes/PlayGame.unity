@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1052d864c2b3f44ea70e9d29fd98f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfPlayers: 2
+  numberOfPlayers: 4
   allTiles: []
   spaceOffsets:
   - {x: 0.25, y: 0, z: 0}
