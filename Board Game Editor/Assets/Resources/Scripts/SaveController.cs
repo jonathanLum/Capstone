@@ -9,7 +9,8 @@ public class SaveController : MonoBehaviour
 {
     public SaveObject so;
     public int currBoardID = 0;
-
+    public int playerCount = 4;
+    public List<Material> pieceColors;
     public EditorController ctrl;
     public GameManager gameManager;
     public SceneController sceneCtrl;
@@ -95,7 +96,8 @@ public class SaveController : MonoBehaviour
                 dto.parent = -1;
             }
 
-            foreach(GameObject child in childList){
+            foreach (GameObject child in childList)
+            {
                 dto.children.Add(ctrl.allTiles.IndexOf(child));
             }
 
@@ -147,7 +149,8 @@ public class SaveController : MonoBehaviour
         foreach (DataTransferObject tile in so.saveData[currBoardID].board)
         {
             var childList = tile.children;
-            foreach(int child in childList){
+            foreach (int child in childList)
+            {
                 ctrl.allTiles[i].GetComponent<EditorTile>().children.Add(ctrl.allTiles[child]);
             }
             i++;
@@ -162,7 +165,7 @@ public class SaveController : MonoBehaviour
             GameObject newTile = Instantiate(playTilePrefab, tile.position, Quaternion.identity);
             gameManager.allTiles.Add(newTile);
             newTile.GetComponent<Tile>().effectValue = tile.effectValue;
-            switch(tile.effect)
+            switch (tile.effect)
             {
                 case EffectTypeEnum.Types.None:
                     newTile.GetComponent<Tile>().effect = null;
@@ -200,13 +203,14 @@ public class SaveController : MonoBehaviour
             else
             {
                 newTile.GetComponent<Tile>().parent = gameManager.allTiles[tile.parent];
-            } 
+            }
         }
         int i = 0;
         foreach (DataTransferObject tile in so.saveData[currBoardID].board)
         {
             var childList = tile.children;
-            foreach(int child in childList){
+            foreach (int child in childList)
+            {
                 gameManager.allTiles[i].GetComponent<Tile>().children.Add(gameManager.allTiles[child]);
             }
             i++;
@@ -219,7 +223,18 @@ public class SaveController : MonoBehaviour
     }
 
 
-    public GameBoard GetCurrentBoard(){
+    public GameBoard GetCurrentBoard()
+    {
         return so.saveData[currBoardID];
+    }
+
+    public void SetPlayerCount(int count)
+    {
+        playerCount = count;
+    }
+
+    public void UpdatePieceColors(List<Material> newPieceColors)
+    {
+        pieceColors = newPieceColors;
     }
 }
