@@ -193,6 +193,8 @@ public class EditorController : MonoBehaviour
             if(hitObject.CompareTag("Tile") && hitObject.GetComponent<EditorTile>().effect != EffectTypeEnum.Types.Start){
                 if(hitObject.GetComponent<EditorTile>().children.Count > 0){
                     hitObject.GetComponent<EditorTile>().effect = effect;
+                    // remove when editor has value changes
+                    hitObject.GetComponent<EditorTile>().effectValue = -3f;
                 }
             }
         }

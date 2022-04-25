@@ -8,4 +8,6 @@ public class Player
     public GameObject piece;
     public GameObject currTile;
     public bool skipNextTurn = false;
+
+    public int escapeRoll = 0;
 }
