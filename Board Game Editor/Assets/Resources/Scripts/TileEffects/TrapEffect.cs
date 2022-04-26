@@ -5,7 +5,8 @@ using UnityEngine;
 public class TrapEffect : TileEffect
 {
     public override void Apply(GameManager gameManager, float effectValue){
-        var escapeNum = (int)Random.Range(-effectValue, effectValue);
+        var escapeNum = Mathf.RoundToInt(Random.Range(1f, Mathf.Abs(effectValue)));
+        gameManager.players[gameManager.currentTurn].escapeRoll = escapeNum;
         Debug.Log("Roll " + escapeNum + " to escape");
     }
 }

@@ -7,7 +7,12 @@ public class GameManager : MonoBehaviour
     public SaveController saveCtrl;
     public int numberOfPlayers;
 
-    int currentTurn = 0;
+    [SerializeField] bool gameOver = false;
+    public int currentTurn = 0;
+
+    [SerializeField]int roll = 0;
+    public int spacesToMove = 0;
+    [SerializeField]float speed = 1f;
 
     [SerializeField] public List<Player> players = new List<Player>();
 
@@ -54,35 +59,70 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // wait for player to roll dice
-
-        // take turn
-        //TakeTurn();
-
+        if(Input.GetMouseButtonDown(0) && !gameOver){
+            spacesToMove = Random.Range(1,7);
+            roll = spacesToMove;
+            var player = players[currentTurn];
+            if(player.escapeRoll == 0 || roll == player.escapeRoll){
+                player.escapeRoll = 0;
+                StartCoroutine(MovePiece());
+            }else{
+                IncrementTurn();
+            } 
+        }
     }
 
 
-    void TakeTurn()
-    {
-        // move piece
-        MovePiece();
-        // check for victory
-
-        // add tile effect
-
-        // incrementTurn
-        IncrementTurn();
-    }
-
-
-    void MovePiece()
+    IEnumerator MovePiece()
     {
         // get current player
-        var target = players[currentTurn];
+        var player = players[currentTurn];
+        player.piece.GetComponent<GamePiece>().moving = true;
+
+        var inTransit = false;
+        var targetPos = new Vector3();
+        while(spacesToMove != 0){
+            if(inTransit){
+                var step = speed * Time.deltaTime;
+                player.piece.transform.position = Vector3.MoveTowards(player.piece.transform.position, targetPos, step);
+                if(Vector3.Distance(player.piece.transform.position, targetPos) < 0.001f){
+                    inTransit = false;
+
+                    spacesToMove -= (int)Mathf.Sign((float)spacesToMove);
+                    if(player.currTile.GetComponent<Tile>().children.Count == 0){
+                        spacesToMove = 0;
+                        // win game
+                        gameOver = true;
+                        Debug.Log("Player " + player.ID + " Wins!");
+                        break;
+                    }
+                    if(!gameOver && spacesToMove == 0)
+                        ApplyEffect();
+                }
+            }else{
+                if(Mathf.Sign(spacesToMove) == 1){
+                    player.currTile = player.currTile.GetComponent<Tile>().children[0];
+                }else{
+                    player.currTile = player.currTile.GetComponent<Tile>().parent;
+                }
+                targetPos = player.currTile.GetComponent<Tile>().GetLocation() + spaceOffsets[player.ID];
+                player.piece.transform.LookAt(targetPos);
+                inTransit = true;
+            }
+            yield return null;
+        }
+        player.piece.GetComponent<GamePiece>().moving = false;
+        if(!gameOver)
+            IncrementTurn();
+    }
+
+    void ApplyEffect(){
+        var player = players[currentTurn];
+        player.currTile.GetComponent<Tile>().LandedOn(gameObject.GetComponent<GameManager>());
     }
 
     void IncrementTurn()
     {
-
         currentTurn += 1;
         if (currentTurn > players.Count - 1)
         {
@@ -92,6 +132,6 @@ public class GameManager : MonoBehaviour
         {
             IncrementTurn();
         }
-        cam.SetTarget(players[currentTurn].piece);
+        //cam.SetTarget(players[currentTurn].piece);
     }
 }

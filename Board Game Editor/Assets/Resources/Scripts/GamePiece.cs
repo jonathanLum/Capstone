@@ -8,12 +8,16 @@ public class GamePiece : MonoBehaviour
     [SerializeField] private GameObject model;
     [SerializeField]private float distance = 20;
     [SerializeField]private float speed = 2;
+    [SerializeField]private float rotateSpeed = 20;
     void Update()
     {
         if(moving){
             // animate
-            transform.rotation = Quaternion.Euler(0f, 0f, distance * Mathf.Sin(Time.time * speed));
+            model.transform.localRotation = Quaternion.Euler(0f, 0f, distance * Mathf.Sin(Time.time * speed));
             
+        }else{
+            // lerp to zero
+            model.transform.localRotation = Quaternion.RotateTowards(model.transform.localRotation, Quaternion.identity, rotateSpeed * Time.deltaTime);
         }
     }
 }
