@@ -21,10 +21,19 @@ public class PlayerSelect : MonoBehaviour
 
     public enum DIRECTION { LEFT, RIGHT };
 
+    public Dictionary<Color, Material> colorMapping;
+
     // Start is called before the first frame update
     void Start()
     {
         gameData = GameObject.FindGameObjectWithTag("GameDataController").GetComponent<GameDataController>();
+
+        colorMapping = new Dictionary<Color, Material>();
+        foreach (Material material in pieceColors)
+        {
+            colorMapping.Add(material.color, material);
+        }
+
         availablePieceColors = new LinkedList<Material>(pieceColors);
         selectedPieceColors = new List<Material> { null, null, null, null };
 
@@ -96,32 +105,33 @@ public class PlayerSelect : MonoBehaviour
     {
         Image image = piece.GetComponentInChildren<Image>();
 
-        if (image.material == image.defaultMaterial)
-        {
-            image.material = availablePieceColors.Last.Value;
-            image.color = image.material.color;
-            availablePieceColors.RemoveLast();
-            selectedPieceColors[pieceSelectors.IndexOf(piece)] = image.material;
-        }
+        // image.material = availablePieceColors.Last.Value;
+        // image.color = image.material.color;
 
+        if (image.color == image.defaultMaterial.color)
+        {
+            Debug.Log(availablePieceColors.Last.Value);
+            image.color = availablePieceColors.Last.Value.color;
+            selectedPieceColors[pieceSelectors.IndexOf(piece)] = availablePieceColors.Last.Value;
+            availablePieceColors.RemoveLast();
+        }
     }
 
     public void RemoveColorFromPiece(GameObject piece)
     {
         Image image = piece.GetComponentInChildren<Image>();
 
-        if (image.material != image.defaultMaterial)
+        if (image.color != image.defaultMaterial.color)
         {
-            availablePieceColors.AddLast(image.material);
-            selectedPieceColors[pieceSelectors.IndexOf(piece)] = image.defaultMaterial;
-            image.material = image.defaultMaterial;
-
+            availablePieceColors.AddLast(colorMapping[image.color]);
+            selectedPieceColors[pieceSelectors.IndexOf(piece)] = colorMapping[image.color];
+            image.color = image.defaultMaterial.color;
         }
 
     }
     public void DecrementPlayerCount()
     {
-        if (playerCount > 1)
+        if (playerCount > 2)
         {
             SetPlayerCount(playerCount - 1);
         }
@@ -146,7 +156,7 @@ public class PlayerSelect : MonoBehaviour
     public void ChangeColor(GameObject pieceSelector, DIRECTION direction)
     {
         Material nextMaterial = availablePieceColors.Last.Value;
-        Material currentMaterial = pieceSelector.GetComponentInChildren<Image>().material;
+        Material currentMaterial = colorMapping[pieceSelector.GetComponentInChildren<Image>().color];
 
         switch (direction)
         {
@@ -163,8 +173,6 @@ public class PlayerSelect : MonoBehaviour
                 break;
         }
 
-
-        pieceSelector.GetComponentInChildren<Image>().material = nextMaterial;
         pieceSelector.GetComponentInChildren<Image>().color = nextMaterial.color;
         selectedPieceColors[pieceSelectors.IndexOf(pieceSelector)] = nextMaterial;
 
