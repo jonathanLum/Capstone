@@ -9,8 +9,6 @@ public class SaveController : MonoBehaviour
 {
     public SaveObject so;
     public int currBoardID = 0;
-    public int playerCount = 4;
-    public List<Material> pieceColors;
     public EditorController ctrl;
     public GameManager gameManager;
     public SceneController sceneCtrl;
@@ -226,15 +224,5 @@ public class SaveController : MonoBehaviour
     public GameBoard GetCurrentBoard()
     {
         return so.saveData[currBoardID];
-    }
-
-    public void SetPlayerCount(int count)
-    {
-        playerCount = count;
-    }
-
-    public void UpdatePieceColors(List<Material> newPieceColors)
-    {
-        pieceColors = newPieceColors;
     }
 }

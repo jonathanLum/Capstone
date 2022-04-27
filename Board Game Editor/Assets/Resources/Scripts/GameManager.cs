@@ -5,14 +5,15 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public SaveController saveCtrl;
+    public GameDataController gameData;
     public int numberOfPlayers;
 
     [SerializeField] bool gameOver = false;
     public int currentTurn = 0;
 
-    [SerializeField]int roll = 0;
+    [SerializeField] int roll = 0;
     public int spacesToMove = 0;
-    [SerializeField]float speed = 1f;
+    [SerializeField] float speed = 1f;
 
     [SerializeField] public List<Player> players = new List<Player>();
 
@@ -29,7 +30,8 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         saveCtrl = GameObject.FindGameObjectWithTag("SaveController").GetComponent<SaveController>();
-        numberOfPlayers = saveCtrl.playerCount;
+        gameData = GameObject.FindGameObjectWithTag("GameDataController").GetComponent<GameDataController>();
+        numberOfPlayers = gameData.playerCount;
 
         for (int i = 0; i < numberOfPlayers; i++)
         {
@@ -43,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Queue<Material> pieceColors = new Queue<Material>(saveCtrl.pieceColors);
+        Queue<Material> pieceColors = new Queue<Material>(gameData.pieceColors);
         foreach (Player plr in players)
         {
             plr.currTile = allTiles[0];
@@ -59,16 +61,20 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // wait for player to roll dice
-        if(Input.GetMouseButtonDown(0) && !gameOver){
-            spacesToMove = Random.Range(1,7);
+        if (Input.GetMouseButtonDown(0) && !gameOver)
+        {
+            spacesToMove = Random.Range(1, 7);
             roll = spacesToMove;
             var player = players[currentTurn];
-            if(player.escapeRoll == 0 || roll == player.escapeRoll){
+            if (player.escapeRoll == 0 || roll == player.escapeRoll)
+            {
                 player.escapeRoll = 0;
                 StartCoroutine(MovePiece());
-            }else{
+            }
+            else
+            {
                 IncrementTurn();
-            } 
+            }
         }
     }
 
@@ -81,28 +87,37 @@ public class GameManager : MonoBehaviour
 
         var inTransit = false;
         var targetPos = new Vector3();
-        while(spacesToMove != 0){
-            if(inTransit){
+        while (spacesToMove != 0)
+        {
+            if (inTransit)
+            {
                 var step = speed * Time.deltaTime;
                 player.piece.transform.position = Vector3.MoveTowards(player.piece.transform.position, targetPos, step);
-                if(Vector3.Distance(player.piece.transform.position, targetPos) < 0.001f){
+                if (Vector3.Distance(player.piece.transform.position, targetPos) < 0.001f)
+                {
                     inTransit = false;
 
                     spacesToMove -= (int)Mathf.Sign((float)spacesToMove);
-                    if(player.currTile.GetComponent<Tile>().children.Count == 0){
+                    if (player.currTile.GetComponent<Tile>().children.Count == 0)
+                    {
                         spacesToMove = 0;
                         // win game
                         gameOver = true;
                         Debug.Log("Player " + player.ID + " Wins!");
                         break;
                     }
-                    if(!gameOver && spacesToMove == 0)
+                    if (!gameOver && spacesToMove == 0)
                         ApplyEffect();
                 }
-            }else{
-                if(Mathf.Sign(spacesToMove) == 1){
+            }
+            else
+            {
+                if (Mathf.Sign(spacesToMove) == 1)
+                {
                     player.currTile = player.currTile.GetComponent<Tile>().children[0];
-                }else{
+                }
+                else
+                {
                     player.currTile = player.currTile.GetComponent<Tile>().parent;
                 }
                 targetPos = player.currTile.GetComponent<Tile>().GetLocation() + spaceOffsets[player.ID];
@@ -112,11 +127,12 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         player.piece.GetComponent<GamePiece>().moving = false;
-        if(!gameOver)
+        if (!gameOver)
             IncrementTurn();
     }
 
-    void ApplyEffect(){
+    void ApplyEffect()
+    {
         var player = players[currentTurn];
         player.currTile.GetComponent<Tile>().LandedOn(gameObject.GetComponent<GameManager>());
     }
