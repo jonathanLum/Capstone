@@ -739,7 +739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3830089bbd5bc43ad082433ef822c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveCtrl: {fileID: 0}
   gameData: {fileID: 0}
   textPlayerCount: {fileID: 285747124}
   playerCount: 4
@@ -1880,6 +1879,10 @@ PrefabInstance:
     - target: {fileID: 2486640577380297569, guid: 66f34b6654a5a35058f15689cd5c0166, type: 3}
       propertyPath: m_Name
       value: SelectPlayer2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268616806374631416, guid: 66f34b6654a5a35058f15689cd5c0166, type: 3}
+      propertyPath: m_text
+      value: Player 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66f34b6654a5a35058f15689cd5c0166, type: 3}
@@ -3119,6 +3122,10 @@ PrefabInstance:
     - target: {fileID: 2486640577380297569, guid: 66f34b6654a5a35058f15689cd5c0166, type: 3}
       propertyPath: m_Name
       value: SelectPlayer4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268616806374631416, guid: 66f34b6654a5a35058f15689cd5c0166, type: 3}
+      propertyPath: m_text
+      value: Player 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66f34b6654a5a35058f15689cd5c0166, type: 3}
@@ -5409,6 +5416,10 @@ PrefabInstance:
     - target: {fileID: 2486640577380297569, guid: 66f34b6654a5a35058f15689cd5c0166, type: 3}
       propertyPath: m_Name
       value: SelectPlayer3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268616806374631416, guid: 66f34b6654a5a35058f15689cd5c0166, type: 3}
+      propertyPath: m_text
+      value: Player 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66f34b6654a5a35058f15689cd5c0166, type: 3}
