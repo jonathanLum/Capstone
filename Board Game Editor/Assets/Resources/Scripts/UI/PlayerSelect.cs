@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerSelect : MonoBehaviour
 {
-    public SaveController saveCtrl;
     public GameDataController gameData;
 
     public TMPro.TextMeshProUGUI textPlayerCount;
@@ -25,7 +24,6 @@ public class PlayerSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // saveCtrl = GameObject.FindGameObjectWithTag("SaveController").GetComponent<SaveController>();
         gameData = GameObject.FindGameObjectWithTag("GameDataController").GetComponent<GameDataController>();
         availablePieceColors = new LinkedList<Material>(pieceColors);
         selectedPieceColors = new List<Material> { null, null, null, null };
