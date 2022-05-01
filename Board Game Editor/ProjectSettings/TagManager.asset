@@ -11,6 +11,7 @@ TagManager:
   - SaveController
   - SceneController
   - GameDataController
+  - CameraController
   layers:
   - Default
   - TransparentFX
