@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     public Transform playerCameraRig;
     public Transform followTransform;
     public Transform cameraTransform;
+    public GameObject diceCamera;
     public float cameraSpeed;
     public float cameraMovementTime;
     public float cameraRotationAmount;
@@ -33,9 +34,10 @@ public class CameraController : MonoBehaviour
     {
         // instance = this;
 
-        currentCamera = CAMERA.MAIN;
         cameraTransform.gameObject.GetComponent<Camera>().enabled = true;
         followTransform.gameObject.GetComponent<Camera>().enabled = false;
+        diceCamera.GetComponent<Camera>().enabled = false;
+        
 
         cameraPosition = mainCameraRig.position;
         cameraRotation = mainCameraRig.rotation;
@@ -83,6 +85,7 @@ public class CameraController : MonoBehaviour
             currentCamera = CAMERA.PLAYER;
             cameraTransform.gameObject.GetComponent<Camera>().enabled = false;
             followTransform.gameObject.GetComponent<Camera>().enabled = true;
+            diceCamera.GetComponent<Camera>().enabled = true;
         }
 
         else
@@ -90,6 +93,7 @@ public class CameraController : MonoBehaviour
             currentCamera = CAMERA.MAIN;
             cameraTransform.gameObject.GetComponent<Camera>().enabled = true;
             followTransform.gameObject.GetComponent<Camera>().enabled = false;
+            diceCamera.GetComponent<Camera>().enabled = false;
         }
     }
     public void SetTarget(GameObject obj)
