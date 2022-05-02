@@ -58,7 +58,7 @@ public class SaveController : MonoBehaviour
         }
         else if (next == SceneManager.GetSceneByName("PlayGame"))
         {
-            gameManager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>();
+            gameManager = GameObject.FindGameObjectWithTag("CameraController").GetComponent<GameManager>();
             LoadBoard();
         }
     }
