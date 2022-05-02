@@ -55,10 +55,6 @@ public class GameManager : MonoBehaviour
         }
 
         cameraController = GameObject.FindGameObjectWithTag("CameraController").GetComponent<CameraController>();
-        Debug.Log(cameraController);
-        Debug.Log(CameraController.instance);
-
-        Debug.Log(players[currentTurn].piece.transform.position);
         cameraController.playerTarget = players[currentTurn].piece.transform;
     }
 
@@ -143,8 +139,6 @@ public class GameManager : MonoBehaviour
 
     void IncrementTurn()
     {
-        Debug.Log(players[currentTurn].piece.transform.position);
-
         currentTurn += 1;
         if (currentTurn > players.Count - 1)
         {
