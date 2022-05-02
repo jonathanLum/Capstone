@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public List<Player> players = new List<Player>();
 
-    CameraController cam;
+    public CameraController cameraController;
 
     public List<GameObject> allTiles;
 
@@ -41,8 +41,6 @@ public class GameManager : MonoBehaviour
             players.Add(player);
             player.ID = i;
         }
-        cam = GameObject.Find("Main Camera").GetComponent<CameraController>();
-
     }
 
     void Start()
@@ -57,7 +55,9 @@ public class GameManager : MonoBehaviour
 
             plr.piece.GetComponentInChildren<MeshRenderer>().material = pieceColors.Dequeue();
         }
-        //Debug.Log(players);
+
+        cameraController = GameObject.FindGameObjectWithTag("CameraController").GetComponent<CameraController>();
+        cameraController.playerTarget = players[currentTurn].piece.transform;
     }
 
     void Update()
@@ -154,6 +154,8 @@ public class GameManager : MonoBehaviour
         {
             IncrementTurn();
         }
-        //cam.SetTarget(players[currentTurn].piece);
+
+        var player = players[currentTurn];
+        cameraController.playerTarget = players[currentTurn].piece.transform;
     }
 }
