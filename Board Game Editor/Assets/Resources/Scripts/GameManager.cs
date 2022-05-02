@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool gameOver = false;
     public int currentTurn = 0;
 
+    public GameObject dice;
+
     [SerializeField] int roll = 0;
     public int spacesToMove = 0;
     [SerializeField] float speed = 1f;
@@ -61,8 +63,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // wait for player to roll dice
-        if (Input.GetMouseButtonDown(0) && !gameOver)
+        if (dice.GetComponent<Dice>().rolled && !gameOver)
         {
+            //Hide dice
+            dice.SetActive(false);
             spacesToMove = Random.Range(1, 7);
             roll = spacesToMove;
             var player = players[currentTurn];
@@ -75,6 +79,7 @@ public class GameManager : MonoBehaviour
             {
                 IncrementTurn();
             }
+            dice.GetComponent<Dice>().Reset();
         }
     }
 
@@ -139,6 +144,7 @@ public class GameManager : MonoBehaviour
 
     void IncrementTurn()
     {
+        dice.SetActive(true);
         currentTurn += 1;
         if (currentTurn > players.Count - 1)
         {
