@@ -8,8 +8,8 @@ public class EditorCamera : MonoBehaviour
      public Vector2 panLimit;
 
      public float scrollSpeed = 20f;
-     public float minY = 5f;
-     public float maxX = 12f;
+     public float minY = 50f;
+     public float maxY = 78f;
  
      void Update()
      {
@@ -35,7 +35,7 @@ public class EditorCamera : MonoBehaviour
          float scroll = Input.GetAxis("Mouse ScrollWheel");
          pos.y -= scroll * scrollSpeed * 17f * Time.deltaTime;
          
-         pos.y = Mathf.Clamp(pos.y, minY, maxX);
+         pos.y = Mathf.Clamp(pos.y, minY, maxY);
          pos.x = Mathf.Clamp(pos.x, -panLimit.x, panLimit.x);
          pos.z = Mathf.Clamp(pos.z, -panLimit.y, panLimit.y);
 

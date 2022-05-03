@@ -8,6 +8,7 @@ public class EditorTile : MonoBehaviour, EffectTypeEnum
     EditorController ctrl;
     Vector3 snapPos;
 
+    [SerializeField] private Canvas canvas;
     public Texture2D icon;
     public GameObject iconPlane;
     TMP_Text numberText;
@@ -16,7 +17,8 @@ public class EditorTile : MonoBehaviour, EffectTypeEnum
     public bool selected = false;
 
     public EffectTypeEnum.Types effect = EffectTypeEnum.Types.None;
-    public float effectValue = 0;
+    public float effectValue = 1;
+    [SerializeField] private TMP_Text effectValText;
 
     public GameObject parent;
     public List<GameObject> children;
@@ -36,6 +38,7 @@ public class EditorTile : MonoBehaviour, EffectTypeEnum
             effect = EffectTypeEnum.Types.Start;
         }
         SetIcon();
+        effectValText.text = effectValue.ToString();
     }
 
     void Update() {
@@ -77,26 +80,55 @@ public class EditorTile : MonoBehaviour, EffectTypeEnum
         {
             case EffectTypeEnum.Types.None:
                 icon = null;
+                CanvasVis(false);
                 break;
             case EffectTypeEnum.Types.Start:
                 icon = (Texture2D)Resources.Load("Textures/StartIcon");
+                CanvasVis(false);
                 break;
             case EffectTypeEnum.Types.End:
                 icon = (Texture2D)Resources.Load("Textures/FinishIcon");
+                CanvasVis(false);
                 break;
             case EffectTypeEnum.Types.Move:
                 icon = (Texture2D)Resources.Load("Textures/MoveIcon");
+                CanvasVis(true);
                 break;
             case EffectTypeEnum.Types.MoveRandom:
                 icon = (Texture2D)Resources.Load("Textures/RandomIcon");
+                CanvasVis(true);
                 break;
             case EffectTypeEnum.Types.Trap:
                 icon = (Texture2D)Resources.Load("Textures/TrapIcon");
+                CanvasVis(false);
                 break;
             case EffectTypeEnum.Types.Attack:
                 icon = (Texture2D)Resources.Load("Textures/AttackIcon");
+                CanvasVis(false);
                 break;
         }
         iconPlane.GetComponent<Renderer>().material.SetTexture("_Texture2D", icon);
+    }
+
+    void CanvasVis(bool val){
+        canvas.gameObject.SetActive(val);
+    }
+
+    public void IncrementEffectVal(){
+        effectValue++;
+        if(effectValue > 10)
+            effectValue = 10;
+        if(effectValue == 0)
+            effectValue = 1;
+        effectValText.text = effectValue.ToString();
+    }
+
+    public void DecrementEffectVal(){
+        effectValue--;
+        if(effectValue < -10)
+            effectValue = -10;
+        if(effectValue == 0)
+            effectValue = -1;
+        effectValText.text = effectValue.ToString();
     }
 }
