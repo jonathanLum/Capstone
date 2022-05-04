@@ -9,7 +9,10 @@ public class GameManager : MonoBehaviour
     public int numberOfPlayers;
 
     [SerializeField] bool gameOver = false;
+    public bool attacking = false;
+    public bool choosingDirection = false;
     public int currentTurn = 0;
+    int dir = 0;
 
     public GameObject dice;
 
@@ -18,8 +21,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] float speed = 1f;
 
     [SerializeField] public List<Player> players = new List<Player>();
+    [SerializeField] List<GameObject> arrows;
 
     public CameraController cameraController;
+    public GameObject diceCamera;
 
     public List<GameObject> allTiles;
 
@@ -66,14 +71,14 @@ public class GameManager : MonoBehaviour
         if (dice.GetComponent<Dice>().rolled && !gameOver)
         {
             //Hide dice
-            dice.SetActive(false);
+            diceCamera.SetActive(false);
             spacesToMove = Random.Range(1, 7);
             roll = spacesToMove;
             var player = players[currentTurn];
             if (player.escapeRoll == 0 || roll == player.escapeRoll)
             {
                 player.escapeRoll = 0;
-                StartCoroutine(MovePiece());
+                StartCoroutine(TakeTurn());
             }
             else
             {
@@ -81,10 +86,15 @@ public class GameManager : MonoBehaviour
             }
             dice.GetComponent<Dice>().Reset();
         }
+
+        // Temorary exit attacking
+        if(Input.GetMouseButtonDown(0) && attacking){
+            attacking = false;
+        }
     }
 
 
-    IEnumerator MovePiece()
+    IEnumerator TakeTurn()
     {
         // get current player
         var player = players[currentTurn];
@@ -92,7 +102,7 @@ public class GameManager : MonoBehaviour
 
         var inTransit = false;
         var targetPos = new Vector3();
-        while (spacesToMove != 0)
+        while (spacesToMove != 0 || choosingDirection)
         {
             if (inTransit)
             {
@@ -119,7 +129,21 @@ public class GameManager : MonoBehaviour
             {
                 if (Mathf.Sign(spacesToMove) == 1)
                 {
-                    player.currTile = player.currTile.GetComponent<Tile>().children[0];
+                    if(player.currTile.GetComponent<Tile>().children.Count > 1){
+                        choosingDirection = true;
+                        // show UI
+                        PlaceArrows();
+                        //wait for choice
+                        while(choosingDirection){
+                            //Debug.Log("waiting for choice");
+                            yield return null;
+                        }
+                        HideArrows();
+                        //set currtile to choice
+                        player.currTile = player.currTile.GetComponent<Tile>().children[dir];
+                    }else{
+                        player.currTile = player.currTile.GetComponent<Tile>().children[0];
+                    }
                 }
                 else
                 {
@@ -131,6 +155,12 @@ public class GameManager : MonoBehaviour
             }
             yield return null;
         }
+
+        // Wait for player to choose during attack
+        while(attacking){
+            yield return null;
+        }
+
         player.piece.GetComponent<GamePiece>().moving = false;
         if (!gameOver)
             IncrementTurn();
@@ -144,7 +174,7 @@ public class GameManager : MonoBehaviour
 
     void IncrementTurn()
     {
-        dice.SetActive(true);
+        diceCamera.SetActive(true);
         currentTurn += 1;
         if (currentTurn > players.Count - 1)
         {
@@ -157,5 +187,29 @@ public class GameManager : MonoBehaviour
 
         var player = players[currentTurn];
         cameraController.playerTarget = players[currentTurn].piece.transform;
+    }
+
+    void PlaceArrows(){
+        var children = players[currentTurn].currTile.GetComponent<Tile>().children;
+        var max = children.Count;
+        for(int i = 0; i<max; i++){
+            arrows[i].transform.position = 
+                children[i].GetComponent<Tile>().GetLocation() + new Vector3(0f, 0.25f, 0f);
+            arrows[i].transform.LookAt(players[currentTurn].currTile.GetComponent<Tile>().GetLocation(), Vector3.up);
+            arrows[i].transform.eulerAngles = new Vector3(0, arrows[i].transform.eulerAngles.y, 0);
+            arrows[i].SetActive(true);
+        }
+    }
+
+    void HideArrows(){
+        foreach(GameObject arrow in arrows){
+            arrow.SetActive(false);
+        }
+    }
+
+    public void DirectionChosen(int childID){
+        dir = childID;
+        choosingDirection = false;
+        //Debug.Log("chosen");
     }
 }
