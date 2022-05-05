@@ -11,8 +11,8 @@ public class CameraEdgeWalls : MonoBehaviour
         Vector3[] corners = { cam.ScreenToWorldPoint(new Vector3(0,0,0)),
                             cam.ScreenToWorldPoint(new Vector3(Screen.width,Screen.height,0))};
         
-        Debug.Log("top left: " + corners[0]);
-        Debug.Log("top right: " + corners[1]);
+        //Debug.Log("top left: " + corners[0]);
+        //Debug.Log("top right: " + corners[1]);
 
         GameObject plane1 = GameObject.CreatePrimitive(PrimitiveType.Plane);
         walls.Add(plane1);
