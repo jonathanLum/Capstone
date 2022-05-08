@@ -68,16 +68,6 @@ public class CameraController : MonoBehaviour
         {
             SwitchCameras();
         }
-
-
-        // transform.LookAt(target.transform);
-
-        // float xDir = Input.GetAxis("Horizontal");
-        // float zDir = Input.GetAxis("Vertical");
-
-        // Vector3 moveDir = new Vector3(xDir, 0.0f, zDir);
-
-        // transform.position += moveDir * 0.01f;
     }
 
     private void TogglePauseGame()
