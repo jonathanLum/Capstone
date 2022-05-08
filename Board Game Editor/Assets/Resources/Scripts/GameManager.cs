@@ -35,11 +35,13 @@ public class GameManager : MonoBehaviour
                                                 new Vector3(0f,0f,.25f), new Vector3(0f,0f,-.25f),
                                                 new Vector3(0f, 0f, 0f)};
     public bool gamePaused;
-    public GameObject notification;
+    public Queue<string> notificationQueue;
+    [SerializeField] List<string> notifications;
 
     // Start is called before the first frame update
     void Awake()
     {
+        notificationQueue = new Queue<string>();
         gamePaused = false;
         saveCtrl = GameObject.FindGameObjectWithTag("SaveController").GetComponent<SaveController>();
         gameData = GameObject.FindGameObjectWithTag("GameDataController").GetComponent<GameDataController>();
@@ -55,9 +57,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        notification.SetActive(false);
-        string text = "Player " + (players[currentTurn].ID + 1).ToString() + " Turn";
-        StartCoroutine(Show(text));
+        StartCoroutine(NotifyLoop());
+        Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
 
         Queue<Material> pieceColors = new Queue<Material>(gameData.pieceColors);
         foreach (Player plr in players)
@@ -183,22 +184,51 @@ public class GameManager : MonoBehaviour
         string text = player.currTile.GetComponent<Tile>().GetTileText();
         if (text != null)
         {
-            StartCoroutine(Show(text));
+            Notify(text);
         }
     }
-    IEnumerator Show(string text)
+
+    IEnumerator NotifyLoop()
     {
-        notification.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text;
-        notification.SetActive(true);
-        yield return new WaitForSeconds(2);
-        notification.SetActive(false);
+        Transform parent = GameObject.Find("Notifications").transform;
+
+        while (true)
+        {
+            Vector3 position = new Vector3(0, 0, 0);
+
+            while (notificationQueue.Count > 0)
+            {
+                string text = notificationQueue.Dequeue();
+                GameObject notification = (GameObject)GameObject.Instantiate(
+                                           Resources.Load("UI/Notification"), new Vector3(0, 0, 0),
+                                           Quaternion.identity, parent);
+                position.y = -((parent.childCount - 1) * notification.GetComponent<RectTransform>().sizeDelta.y + (parent.childCount * 10));
+                notification.GetComponent<RectTransform>().localPosition = position;
+                notification.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text;
+                StartCoroutine(DisplayNotification(notification));
+            }
+
+            position.y = 0;
+            foreach (Transform child in parent)
+            {
+                position.y -= child.gameObject.GetComponent<RectTransform>().sizeDelta.y + 10;
+                child.gameObject.GetComponent<RectTransform>().localPosition = position;
+            }
+            yield return null;
+        }
     }
-    IEnumerator ShowPlayerTurn()
+
+    IEnumerator DisplayNotification(GameObject notification)
     {
-        notification.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Player " + (players[currentTurn].ID + 1).ToString() + " Turn";
         notification.SetActive(true);
         yield return new WaitForSeconds(2);
         notification.SetActive(false);
+        DestroyImmediate(notification);
+    }
+    void Notify(string text)
+    {
+        notificationQueue.Enqueue(text);
+        notifications = new List<string>(notificationQueue);
     }
 
     void IncrementTurn()
@@ -213,13 +243,15 @@ public class GameManager : MonoBehaviour
         {
             players[currentTurn].skipNextTurn = false;
             IncrementTurn();
+            return;
         }
 
         var player = players[currentTurn];
         cameraController.playerTarget = players[currentTurn].piece.transform;
         changeTurn.Invoke();
-        string text = "Player " + (players[currentTurn].ID + 1).ToString() + " Turn";
-        StartCoroutine(Show(text));
+
+        // string text = "Player " + (players[currentTurn].ID + 1).ToString() + " Turn";
+        Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
     }
 
     void PlaceArrows()
