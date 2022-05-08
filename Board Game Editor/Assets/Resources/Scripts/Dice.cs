@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-
+    public int number;
     public Camera cam;
     private Vector3 mOffset;
     [SerializeField] private Vector3 mouseDir;
@@ -14,6 +14,7 @@ public class Dice : MonoBehaviour
     public bool rolled = false;
     private bool rolling = false;
     private Vector3 resetPos;
+    public DiceRollResult rollResult;
 
     private void Start() {
         resetPos = transform.position;
@@ -24,6 +25,7 @@ public class Dice : MonoBehaviour
         
         if(rolling){
             if(GetComponent<Rigidbody>().IsSleeping()){
+                number = rollResult.number;
                 StartCoroutine(Delay());
             }
         }
@@ -43,7 +45,10 @@ public class Dice : MonoBehaviour
 
     private void OnMouseUp() {
         if(!rolling && !rolled){
-            Vector3 rot = new Vector3(Random.rotation.x, Random.rotation.y, Random.rotation.z);
+            float x = Random.Range(-500,500);
+            float y = Random.Range(-500,500);
+            float z = Random.Range(-500,500);
+            Vector3 rot = new Vector3(x, y, z);
             GetComponent<Rigidbody>().AddTorque(rot * 30f, ForceMode.Impulse);
             var spot = mOffset;
             spot.y -= heightOffset;

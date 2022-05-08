@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
+    public UnityEvent changeTurn;
+    
     public SaveController saveCtrl;
     public GameDataController gameData;
     public int numberOfPlayers;
@@ -72,7 +75,7 @@ public class GameManager : MonoBehaviour
         {
             //Hide dice
             diceCamera.SetActive(false);
-            spacesToMove = Random.Range(1, 7);
+            spacesToMove = dice.GetComponent<Dice>().number;
             roll = spacesToMove;
             var player = players[currentTurn];
             if (player.escapeRoll == 0 || roll == player.escapeRoll)
@@ -85,11 +88,6 @@ public class GameManager : MonoBehaviour
                 IncrementTurn();
             }
             dice.GetComponent<Dice>().Reset();
-        }
-
-        // Temorary exit attacking
-        if(Input.GetMouseButtonDown(0) && attacking){
-            attacking = false;
         }
     }
 
@@ -118,7 +116,7 @@ public class GameManager : MonoBehaviour
                         spacesToMove = 0;
                         // win game
                         gameOver = true;
-                        Debug.Log("Player " + player.ID + " Wins!");
+                        Debug.Log("Player " + player.ID+1 + " Wins!");
                         break;
                     }
                     if (!gameOver && spacesToMove == 0)
@@ -182,11 +180,13 @@ public class GameManager : MonoBehaviour
         }
         if (players[currentTurn].skipNextTurn == true)
         {
+            players[currentTurn].skipNextTurn = false;
             IncrementTurn();
         }
 
         var player = players[currentTurn];
         cameraController.playerTarget = players[currentTurn].piece.transform;
+        changeTurn.Invoke();
     }
 
     void PlaceArrows(){
