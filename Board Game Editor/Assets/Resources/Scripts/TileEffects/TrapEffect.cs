@@ -13,7 +13,7 @@ public class TrapEffect : TileEffect
         Debug.Log("Roll " + escapeNum + " to escape");
     }
 
-    public override string text
+    public override string message
     {
         get
         {

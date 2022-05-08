@@ -30,11 +30,11 @@ public class Tile : MonoBehaviour
         return transform.position + new Vector3(0.5f, 0, 0.5f);
     }
 
-    public string GetTileText()
+    public string GetTileMessage()
     {
         if (effect != null)
         {
-            return effect.text;
+            return effect.message;
         }
 
         return null;

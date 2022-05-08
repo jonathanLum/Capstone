@@ -14,7 +14,7 @@ public class MoveEffect : TileEffect
         Debug.Log("Move " + effectValue);
     }
 
-    public override string text
+    public override string message
     {
         get
         {

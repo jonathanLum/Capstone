@@ -17,7 +17,7 @@ public class MoveRandomEffect : TileEffect
         Debug.Log("Move random" + tileCount);
     }
 
-    public override string text
+    public override string message
     {
         get
         {

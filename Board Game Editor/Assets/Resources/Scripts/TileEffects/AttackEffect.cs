@@ -10,7 +10,7 @@ public class AttackEffect : TileEffect
         Debug.Log("Attack chosen player");
     }
 
-    public override string text
+    public override string message
     {
         get
         {

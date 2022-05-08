@@ -7,5 +7,5 @@ public abstract class TileEffect : ScriptableObject
 {
     public abstract void Apply(GameManager gameManager, float effectValue);
 
-    public abstract string text { get; }
+    public abstract string message { get; }
 }

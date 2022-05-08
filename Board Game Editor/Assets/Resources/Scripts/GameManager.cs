@@ -36,8 +36,6 @@ public class GameManager : MonoBehaviour
                                                 new Vector3(0f, 0f, 0f)};
     public bool gamePaused;
     public Queue<string> notificationQueue;
-    [SerializeField] List<string> notifications;
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -181,10 +179,10 @@ public class GameManager : MonoBehaviour
         var player = players[currentTurn];
         player.currTile.GetComponent<Tile>().LandedOn(gameObject.GetComponent<GameManager>());
 
-        string text = player.currTile.GetComponent<Tile>().GetTileText();
-        if (text != null)
+        string effectText = player.currTile.GetComponent<Tile>().GetTileMessage();
+        if (effectText != null)
         {
-            Notify(text);
+            Notify(effectText);
         }
     }
 
@@ -228,7 +226,6 @@ public class GameManager : MonoBehaviour
     void Notify(string text)
     {
         notificationQueue.Enqueue(text);
-        notifications = new List<string>(notificationQueue);
     }
 
     void IncrementTurn()
@@ -250,8 +247,11 @@ public class GameManager : MonoBehaviour
         cameraController.playerTarget = players[currentTurn].piece.transform;
         changeTurn.Invoke();
 
-        // string text = "Player " + (players[currentTurn].ID + 1).ToString() + " Turn";
         Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
+        if (player.escapeRoll > 0)
+        {
+            Notify(player.currTile.GetComponent<Tile>().GetTileMessage());
+        }
     }
 
     void PlaceArrows()
