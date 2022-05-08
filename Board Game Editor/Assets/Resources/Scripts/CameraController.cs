@@ -24,10 +24,11 @@ public class CameraController : MonoBehaviour
     public CAMERA currentCamera;
     public Transform playerTarget;
 
-
+    public bool gamePaused;
     void Awake()
     {
         instance = this;
+        gamePaused = false;
     }
     // Start is called before the first frame update
     void Start()
@@ -37,7 +38,7 @@ public class CameraController : MonoBehaviour
         cameraTransform.gameObject.GetComponent<Camera>().enabled = true;
         followTransform.gameObject.GetComponent<Camera>().enabled = false;
         diceCamera.GetComponent<Camera>().enabled = false;
-        
+
 
         cameraPosition = mainCameraRig.position;
         cameraRotation = mainCameraRig.rotation;
@@ -47,6 +48,11 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePauseGame();
+        }
 
         if (currentCamera == CAMERA.MAIN)
         {
@@ -72,6 +78,21 @@ public class CameraController : MonoBehaviour
         // Vector3 moveDir = new Vector3(xDir, 0.0f, zDir);
 
         // transform.position += moveDir * 0.01f;
+    }
+
+    private void TogglePauseGame()
+    {
+        gamePaused = !gamePaused;
+
+        if (gamePaused)
+        {
+            Time.timeScale = 0f;
+        }
+
+        else
+        {
+            Time.timeScale = 1f;
+        }
     }
 
     private void FixedUpdate()
