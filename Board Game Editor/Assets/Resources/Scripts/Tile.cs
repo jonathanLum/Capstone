@@ -12,18 +12,32 @@ public class Tile : MonoBehaviour
     public GameObject parent;
     public List<GameObject> children;
 
-    private void Start() {
+    private void Start()
+    {
         iconPlane.GetComponent<Renderer>().material.SetTexture("_Texture2D", icon);
     }
 
-    public void LandedOn(GameManager gameManager){
-        if(effect != null){
+    public void LandedOn(GameManager gameManager)
+    {
+        if (effect != null)
+        {
             effect.Apply(gameManager, effectValue);
         }
     }
 
-    public Vector3 GetLocation(){
+    public Vector3 GetLocation()
+    {
         return transform.position + new Vector3(0.5f, 0, 0.5f);
+    }
+
+    public string GetTileText()
+    {
+        if (effect != null)
+        {
+            return effect.text;
+        }
+
+        return null;
     }
 
 }

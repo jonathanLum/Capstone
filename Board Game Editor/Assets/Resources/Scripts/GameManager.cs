@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
                                                 new Vector3(0f,0f,.25f), new Vector3(0f,0f,-.25f),
                                                 new Vector3(0f, 0f, 0f)};
     public bool gamePaused;
+    public GameObject notification;
 
     // Start is called before the first frame update
     void Awake()
@@ -54,6 +55,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        notification.SetActive(false);
+        string text = "Player " + (players[currentTurn].ID + 1).ToString() + " Turn";
+        StartCoroutine(Show(text));
+
         Queue<Material> pieceColors = new Queue<Material>(gameData.pieceColors);
         foreach (Player plr in players)
         {
@@ -174,6 +179,26 @@ public class GameManager : MonoBehaviour
     {
         var player = players[currentTurn];
         player.currTile.GetComponent<Tile>().LandedOn(gameObject.GetComponent<GameManager>());
+
+        string text = player.currTile.GetComponent<Tile>().GetTileText();
+        if (text != null)
+        {
+            StartCoroutine(Show(text));
+        }
+    }
+    IEnumerator Show(string text)
+    {
+        notification.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text;
+        notification.SetActive(true);
+        yield return new WaitForSeconds(2);
+        notification.SetActive(false);
+    }
+    IEnumerator ShowPlayerTurn()
+    {
+        notification.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Player " + (players[currentTurn].ID + 1).ToString() + " Turn";
+        notification.SetActive(true);
+        yield return new WaitForSeconds(2);
+        notification.SetActive(false);
     }
 
     void IncrementTurn()
@@ -193,6 +218,8 @@ public class GameManager : MonoBehaviour
         var player = players[currentTurn];
         cameraController.playerTarget = players[currentTurn].piece.transform;
         changeTurn.Invoke();
+        string text = "Player " + (players[currentTurn].ID + 1).ToString() + " Turn";
+        StartCoroutine(Show(text));
     }
 
     void PlaceArrows()
@@ -224,3 +251,4 @@ public class GameManager : MonoBehaviour
         //Debug.Log("chosen");
     }
 }
+
