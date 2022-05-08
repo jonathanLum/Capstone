@@ -29,12 +29,12 @@ public class CameraController : MonoBehaviour
     void Awake()
     {
         instance = this;
-        gamePaused = false;
     }
     // Start is called before the first frame update
     void Start()
     {
         // instance = this;
+        this.GetComponent<GameManager>().gamePaused = false;
         pauseMenu.SetActive(false);
 
         cameraTransform.gameObject.GetComponent<Camera>().enabled = true;
@@ -74,9 +74,9 @@ public class CameraController : MonoBehaviour
 
     public void TogglePauseGame()
     {
-        gamePaused = !gamePaused;
+        this.GetComponent<GameManager>().gamePaused = !this.GetComponent<GameManager>().gamePaused;
 
-        if (gamePaused)
+        if (this.GetComponent<GameManager>().gamePaused)
         {
             Time.timeScale = 0f;
             pauseMenu.SetActive(true);
