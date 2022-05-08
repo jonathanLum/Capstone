@@ -239,6 +239,7 @@ public class GameManager : MonoBehaviour
         if (players[currentTurn].skipNextTurn == true)
         {
             players[currentTurn].skipNextTurn = false;
+            Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Skipped");
             IncrementTurn();
             return;
         }
