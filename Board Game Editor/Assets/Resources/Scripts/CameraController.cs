@@ -25,6 +25,7 @@ public class CameraController : MonoBehaviour
     public Transform playerTarget;
 
     public bool gamePaused;
+    public GameObject pauseMenu;
     void Awake()
     {
         instance = this;
@@ -34,6 +35,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         // instance = this;
+        pauseMenu.SetActive(false);
 
         cameraTransform.gameObject.GetComponent<Camera>().enabled = true;
         followTransform.gameObject.GetComponent<Camera>().enabled = false;
@@ -70,19 +72,27 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void TogglePauseGame()
+    public void TogglePauseGame()
     {
         gamePaused = !gamePaused;
 
         if (gamePaused)
         {
             Time.timeScale = 0f;
+            pauseMenu.SetActive(true);
         }
 
         else
         {
             Time.timeScale = 1f;
+            pauseMenu.SetActive(false);
         }
+    }
+
+    public void ReturnToMainMenu()
+    {
+        SceneController sceneCtrl = GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>();
+        sceneCtrl.GoToMainMenu();
     }
 
     private void FixedUpdate()
