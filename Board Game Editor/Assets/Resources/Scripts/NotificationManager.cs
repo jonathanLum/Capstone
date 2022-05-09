@@ -4,6 +4,8 @@ using UnityEngine;
 public class NotificationManager : MonoBehaviour
 {
     public Queue<string> notificationQueue;
+    [SerializeField] float notificationDuration;
+    [SerializeField] float notificationDelay;
 
     public IEnumerator NotifyLoop()
     {
@@ -24,14 +26,19 @@ public class NotificationManager : MonoBehaviour
                 notification.GetComponent<RectTransform>().localPosition = position;
                 notification.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text;
                 StartCoroutine(DisplayNotification(notification));
+                yield return new WaitForSeconds(notificationDelay);
             }
 
-            position.y = 0;
+            int childIndex = 0;
+            position = new Vector3(0, 0, 0);
             foreach (Transform child in parent)
             {
-                position.y -= child.gameObject.GetComponent<RectTransform>().sizeDelta.y + 10;
+                position.y = -((childIndex) * child.GetComponent<RectTransform>().sizeDelta.y + ((childIndex + 1) * 10));
                 child.gameObject.GetComponent<RectTransform>().localPosition = position;
+                // child.gameObject.GetComponent<RectTransform>().localPosition = Vector3.Lerp(child.gameObject.GetComponent<RectTransform>().localPosition, position, notificationDelay * Time.deltaTime);
+                childIndex++;
             }
+
             yield return null;
         }
     }
@@ -39,9 +46,9 @@ public class NotificationManager : MonoBehaviour
     private IEnumerator DisplayNotification(GameObject notification)
     {
         notification.SetActive(true);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(notificationDuration);
         notification.SetActive(false);
-        DestroyImmediate(notification);
+        Destroy(notification);
     }
     public void Notify(string text)
     {

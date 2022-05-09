@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         // notificationQueue = new Queue<string>();
-        notifications = gameObject.AddComponent<NotificationManager>();
+        notifications = gameObject.GetComponent<NotificationManager>();
         gamePaused = false;
         saveCtrl = GameObject.FindGameObjectWithTag("SaveController").GetComponent<SaveController>();
         gameData = GameObject.FindGameObjectWithTag("GameDataController").GetComponent<GameDataController>();
