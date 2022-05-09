@@ -35,11 +35,12 @@ public class GameManager : MonoBehaviour
                                                 new Vector3(0f,0f,.25f), new Vector3(0f,0f,-.25f),
                                                 new Vector3(0f, 0f, 0f)};
     public bool gamePaused;
-    public Queue<string> notificationQueue;
+    public NotificationManager notifications;
     // Start is called before the first frame update
     void Awake()
     {
-        notificationQueue = new Queue<string>();
+        // notificationQueue = new Queue<string>();
+        notifications = gameObject.AddComponent<NotificationManager>();
         gamePaused = false;
         saveCtrl = GameObject.FindGameObjectWithTag("SaveController").GetComponent<SaveController>();
         gameData = GameObject.FindGameObjectWithTag("GameDataController").GetComponent<GameDataController>();
@@ -55,8 +56,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(NotifyLoop());
-        Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
+        StartCoroutine(notifications.NotifyLoop());
+        notifications.Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
 
         Queue<Material> pieceColors = new Queue<Material>(gameData.pieceColors);
         foreach (Player plr in players)
@@ -182,51 +183,51 @@ public class GameManager : MonoBehaviour
         string effectText = player.currTile.GetComponent<Tile>().GetTileMessage();
         if (effectText != null)
         {
-            Notify(effectText);
+            notifications.Notify(effectText);
         }
     }
 
-    IEnumerator NotifyLoop()
-    {
-        Transform parent = GameObject.Find("Notifications").transform;
+    // IEnumerator NotifyLoop()
+    // {
+    //     Transform parent = GameObject.Find("Notifications").transform;
 
-        while (true)
-        {
-            Vector3 position = new Vector3(0, 0, 0);
+    //     while (true)
+    //     {
+    //         Vector3 position = new Vector3(0, 0, 0);
 
-            while (notificationQueue.Count > 0)
-            {
-                string text = notificationQueue.Dequeue();
-                GameObject notification = (GameObject)GameObject.Instantiate(
-                                           Resources.Load("UI/Notification"), new Vector3(0, 0, 0),
-                                           Quaternion.identity, parent);
-                position.y = -((parent.childCount - 1) * notification.GetComponent<RectTransform>().sizeDelta.y + (parent.childCount * 10));
-                notification.GetComponent<RectTransform>().localPosition = position;
-                notification.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text;
-                StartCoroutine(DisplayNotification(notification));
-            }
+    //         while (notificationQueue.Count > 0)
+    //         {
+    //             string text = notificationQueue.Dequeue();
+    //             GameObject notification = (GameObject)GameObject.Instantiate(
+    //                                        Resources.Load("UI/Notification"), new Vector3(0, 0, 0),
+    //                                        Quaternion.identity, parent);
+    //             position.y = -((parent.childCount - 1) * notification.GetComponent<RectTransform>().sizeDelta.y + (parent.childCount * 10));
+    //             notification.GetComponent<RectTransform>().localPosition = position;
+    //             notification.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text;
+    //             StartCoroutine(DisplayNotification(notification));
+    //         }
 
-            position.y = 0;
-            foreach (Transform child in parent)
-            {
-                position.y -= child.gameObject.GetComponent<RectTransform>().sizeDelta.y + 10;
-                child.gameObject.GetComponent<RectTransform>().localPosition = position;
-            }
-            yield return null;
-        }
-    }
+    //         position.y = 0;
+    //         foreach (Transform child in parent)
+    //         {
+    //             position.y -= child.gameObject.GetComponent<RectTransform>().sizeDelta.y + 10;
+    //             child.gameObject.GetComponent<RectTransform>().localPosition = position;
+    //         }
+    //         yield return null;
+    //     }
+    // }
 
-    IEnumerator DisplayNotification(GameObject notification)
-    {
-        notification.SetActive(true);
-        yield return new WaitForSeconds(2);
-        notification.SetActive(false);
-        DestroyImmediate(notification);
-    }
-    void Notify(string text)
-    {
-        notificationQueue.Enqueue(text);
-    }
+    // IEnumerator DisplayNotification(GameObject notification)
+    // {
+    //     notification.SetActive(true);
+    //     yield return new WaitForSeconds(2);
+    //     notification.SetActive(false);
+    //     DestroyImmediate(notification);
+    // }
+    // void Notify(string text)
+    // {
+    //     notificationQueue.Enqueue(text);
+    // }
 
     void IncrementTurn()
     {
@@ -239,7 +240,7 @@ public class GameManager : MonoBehaviour
         if (players[currentTurn].skipNextTurn == true)
         {
             players[currentTurn].skipNextTurn = false;
-            Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Skipped");
+            notifications.Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Skipped");
             IncrementTurn();
             return;
         }
@@ -248,10 +249,10 @@ public class GameManager : MonoBehaviour
         cameraController.playerTarget = players[currentTurn].piece.transform;
         changeTurn.Invoke();
 
-        Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
+        notifications.Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
         if (player.escapeRoll > 0)
         {
-            Notify(player.currTile.GetComponent<Tile>().GetTileMessage());
+            notifications.Notify(player.currTile.GetComponent<Tile>().GetTileMessage());
         }
     }
 
