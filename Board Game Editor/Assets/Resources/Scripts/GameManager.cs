@@ -187,52 +187,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // IEnumerator NotifyLoop()
-    // {
-    //     Transform parent = GameObject.Find("Notifications").transform;
-
-    //     while (true)
-    //     {
-    //         Vector3 position = new Vector3(0, 0, 0);
-
-    //         while (notificationQueue.Count > 0)
-    //         {
-    //             string text = notificationQueue.Dequeue();
-    //             GameObject notification = (GameObject)GameObject.Instantiate(
-    //                                        Resources.Load("UI/Notification"), new Vector3(0, 0, 0),
-    //                                        Quaternion.identity, parent);
-    //             position.y = -((parent.childCount - 1) * notification.GetComponent<RectTransform>().sizeDelta.y + (parent.childCount * 10));
-    //             notification.GetComponent<RectTransform>().localPosition = position;
-    //             notification.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text;
-    //             StartCoroutine(DisplayNotification(notification));
-    //         }
-
-    //         position.y = 0;
-    //         foreach (Transform child in parent)
-    //         {
-    //             position.y -= child.gameObject.GetComponent<RectTransform>().sizeDelta.y + 10;
-    //             child.gameObject.GetComponent<RectTransform>().localPosition = position;
-    //         }
-    //         yield return null;
-    //     }
-    // }
-
-    // IEnumerator DisplayNotification(GameObject notification)
-    // {
-    //     notification.SetActive(true);
-    //     yield return new WaitForSeconds(2);
-    //     notification.SetActive(false);
-    //     DestroyImmediate(notification);
-    // }
-    // void Notify(string text)
-    // {
-    //     notificationQueue.Enqueue(text);
-    // }
-
     void IncrementTurn()
     {
         diceCamera.SetActive(true);
         currentTurn += 1;
+        changeTurn.Invoke();
+
         if (currentTurn > players.Count - 1)
         {
             currentTurn = 0;
@@ -247,12 +207,11 @@ public class GameManager : MonoBehaviour
 
         var player = players[currentTurn];
         cameraController.playerTarget = players[currentTurn].piece.transform;
-        changeTurn.Invoke();
 
         notifications.Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
         if (player.escapeRoll > 0)
         {
-            notifications.Notify(player.currTile.GetComponent<Tile>().GetTileMessage());
+            notifications.Notify("Roll " + player.escapeRoll + " to escape");
         }
     }
 
