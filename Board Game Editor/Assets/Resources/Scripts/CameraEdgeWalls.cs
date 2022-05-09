@@ -5,11 +5,12 @@ using UnityEngine;
 public class CameraEdgeWalls : MonoBehaviour
 {
     public Camera cam;
+    public Vector3[] corners = new Vector3[2];
     List<GameObject> walls = new List<GameObject>();
     void Start()
     {
-        Vector3[] corners = { cam.ScreenToWorldPoint(new Vector3(0,0,0)),
-                            cam.ScreenToWorldPoint(new Vector3(Screen.width,Screen.height,0))};
+        corners[0] = cam.ScreenToWorldPoint(new Vector3(0,0,0));
+        corners[1] = cam.ScreenToWorldPoint(new Vector3(Screen.width,Screen.height,0));
         
         //Debug.Log("top left: " + corners[0]);
         //Debug.Log("top right: " + corners[1]);
