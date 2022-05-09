@@ -24,7 +24,8 @@ public class CameraController : MonoBehaviour
     public CAMERA currentCamera;
     public Transform playerTarget;
 
-
+    public bool gamePaused;
+    public GameObject pauseMenu;
     void Awake()
     {
         instance = this;
@@ -33,11 +34,13 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         // instance = this;
+        this.GetComponent<GameManager>().gamePaused = false;
+        pauseMenu.SetActive(false);
 
         cameraTransform.gameObject.GetComponent<Camera>().enabled = true;
         followTransform.gameObject.GetComponent<Camera>().enabled = false;
         diceCamera.GetComponent<Camera>().enabled = false;
-        
+
 
         cameraPosition = mainCameraRig.position;
         cameraRotation = mainCameraRig.rotation;
@@ -47,6 +50,11 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePauseGame();
+        }
 
         if (currentCamera == CAMERA.MAIN)
         {
@@ -62,16 +70,29 @@ public class CameraController : MonoBehaviour
         {
             SwitchCameras();
         }
+    }
 
+    public void TogglePauseGame()
+    {
+        this.GetComponent<GameManager>().gamePaused = !this.GetComponent<GameManager>().gamePaused;
 
-        // transform.LookAt(target.transform);
+        if (this.GetComponent<GameManager>().gamePaused)
+        {
+            Time.timeScale = 0f;
+            pauseMenu.SetActive(true);
+        }
 
-        // float xDir = Input.GetAxis("Horizontal");
-        // float zDir = Input.GetAxis("Vertical");
+        else
+        {
+            Time.timeScale = 1f;
+            pauseMenu.SetActive(false);
+        }
+    }
 
-        // Vector3 moveDir = new Vector3(xDir, 0.0f, zDir);
-
-        // transform.position += moveDir * 0.01f;
+    public void ReturnToMainMenu()
+    {
+        SceneController sceneCtrl = GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>();
+        sceneCtrl.GoToMainMenu();
     }
 
     private void FixedUpdate()

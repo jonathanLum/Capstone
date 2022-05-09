@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
     public UnityEvent changeTurn;
-    
+
     public SaveController saveCtrl;
     public GameDataController gameData;
     public int numberOfPlayers;
@@ -34,11 +34,14 @@ public class GameManager : MonoBehaviour
     public Vector3[] spaceOffsets = new Vector3[]{new Vector3(.25f,0f,0f), new Vector3(-.25f,0f,0f),
                                                 new Vector3(0f,0f,.25f), new Vector3(0f,0f,-.25f),
                                                 new Vector3(0f, 0f, 0f)};
-
-
+    public bool gamePaused;
+    public NotificationManager notifications;
     // Start is called before the first frame update
     void Awake()
     {
+        // notificationQueue = new Queue<string>();
+        notifications = gameObject.GetComponent<NotificationManager>();
+        gamePaused = false;
         saveCtrl = GameObject.FindGameObjectWithTag("SaveController").GetComponent<SaveController>();
         gameData = GameObject.FindGameObjectWithTag("GameDataController").GetComponent<GameDataController>();
         numberOfPlayers = gameData.playerCount;
@@ -53,6 +56,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(notifications.NotifyLoop());
+        notifications.Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
+
         Queue<Material> pieceColors = new Queue<Material>(gameData.pieceColors);
         foreach (Player plr in players)
         {
@@ -116,7 +122,7 @@ public class GameManager : MonoBehaviour
                         spacesToMove = 0;
                         // win game
                         gameOver = true;
-                        Debug.Log("Player " + player.ID+1 + " Wins!");
+                        Debug.Log("Player " + player.ID + 1 + " Wins!");
                         break;
                     }
                     if (!gameOver && spacesToMove == 0)
@@ -127,19 +133,23 @@ public class GameManager : MonoBehaviour
             {
                 if (Mathf.Sign(spacesToMove) == 1)
                 {
-                    if(player.currTile.GetComponent<Tile>().children.Count > 1){
+                    if (player.currTile.GetComponent<Tile>().children.Count > 1)
+                    {
                         choosingDirection = true;
                         // show UI
                         PlaceArrows();
                         //wait for choice
-                        while(choosingDirection){
+                        while (choosingDirection)
+                        {
                             //Debug.Log("waiting for choice");
                             yield return null;
                         }
                         HideArrows();
                         //set currtile to choice
                         player.currTile = player.currTile.GetComponent<Tile>().children[dir];
-                    }else{
+                    }
+                    else
+                    {
                         player.currTile = player.currTile.GetComponent<Tile>().children[0];
                     }
                 }
@@ -155,7 +165,8 @@ public class GameManager : MonoBehaviour
         }
 
         // Wait for player to choose during attack
-        while(attacking){
+        while (attacking)
+        {
             yield return null;
         }
 
@@ -168,12 +179,20 @@ public class GameManager : MonoBehaviour
     {
         var player = players[currentTurn];
         player.currTile.GetComponent<Tile>().LandedOn(gameObject.GetComponent<GameManager>());
+
+        string effectText = player.currTile.GetComponent<Tile>().GetTileMessage();
+        if (effectText != null)
+        {
+            notifications.Notify(effectText);
+        }
     }
 
     void IncrementTurn()
     {
         diceCamera.SetActive(true);
         currentTurn += 1;
+        changeTurn.Invoke();
+
         if (currentTurn > players.Count - 1)
         {
             currentTurn = 0;
@@ -181,19 +200,28 @@ public class GameManager : MonoBehaviour
         if (players[currentTurn].skipNextTurn == true)
         {
             players[currentTurn].skipNextTurn = false;
+            notifications.Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Skipped");
             IncrementTurn();
+            return;
         }
 
         var player = players[currentTurn];
         cameraController.playerTarget = players[currentTurn].piece.transform;
-        changeTurn.Invoke();
+
+        notifications.Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
+        if (player.escapeRoll > 0)
+        {
+            notifications.Notify("Roll " + player.escapeRoll + " to escape");
+        }
     }
 
-    void PlaceArrows(){
+    void PlaceArrows()
+    {
         var children = players[currentTurn].currTile.GetComponent<Tile>().children;
         var max = children.Count;
-        for(int i = 0; i<max; i++){
-            arrows[i].transform.position = 
+        for (int i = 0; i < max; i++)
+        {
+            arrows[i].transform.position =
                 children[i].GetComponent<Tile>().GetLocation() + new Vector3(0f, 0.25f, 0f);
             arrows[i].transform.LookAt(players[currentTurn].currTile.GetComponent<Tile>().GetLocation(), Vector3.up);
             arrows[i].transform.eulerAngles = new Vector3(0, arrows[i].transform.eulerAngles.y, 0);
@@ -201,15 +229,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void HideArrows(){
-        foreach(GameObject arrow in arrows){
+    void HideArrows()
+    {
+        foreach (GameObject arrow in arrows)
+        {
             arrow.SetActive(false);
         }
     }
 
-    public void DirectionChosen(int childID){
+    public void DirectionChosen(int childID)
+    {
         dir = childID;
         choosingDirection = false;
         //Debug.Log("chosen");
     }
 }
+
