@@ -79,4 +79,8 @@ public class TurnOrderUI : MonoBehaviour
         startIndex += 1;
         UpdateDisplay();
     }
+
+    public void Disable(){
+        gameObject.SetActive(false);
+    }
 }

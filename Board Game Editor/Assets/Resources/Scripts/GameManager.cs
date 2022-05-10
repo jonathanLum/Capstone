@@ -2,16 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
+
+
+[System.Serializable]
+public class MyIntEvent : UnityEvent<int>{}
 
 public class GameManager : MonoBehaviour
 {
     public UnityEvent changeTurn;
+    public MyIntEvent gameOverEvent;
 
     public SaveController saveCtrl;
     public GameDataController gameData;
     public int numberOfPlayers;
 
-    [SerializeField] bool gameOver = false;
+    public bool gameOver = false;
     public bool attacking = false;
     public bool choosingDirection = false;
     public int currentTurn = 0;
@@ -19,12 +25,13 @@ public class GameManager : MonoBehaviour
 
     public GameObject dice;
 
-    [SerializeField] int roll = 0;
+    int roll = 0;
     public int spacesToMove = 0;
     [SerializeField] float speed = 1f;
 
     [SerializeField] public List<Player> players = new List<Player>();
     [SerializeField] List<GameObject> arrows;
+    [SerializeField] List<GameObject> placementSpawns;
 
     public CameraController cameraController;
     public GameObject diceCamera;
@@ -121,8 +128,7 @@ public class GameManager : MonoBehaviour
                     {
                         spacesToMove = 0;
                         // win game
-                        gameOver = true;
-                        Debug.Log("Player " + player.ID + 1 + " Wins!");
+                        GameOver();
                         break;
                     }
                     if (!gameOver && spacesToMove == 0)
@@ -213,6 +219,79 @@ public class GameManager : MonoBehaviour
         {
             notifications.Notify("Roll " + player.escapeRoll + " to escape");
         }
+    }
+
+    void GameOver(){
+        gameOver = true;
+        gameOverEvent.Invoke(currentTurn+1);
+
+        CalculatePlacements();
+
+        // log all placements
+        foreach(Player player in players){
+            Debug.Log("Player " + (player.ID + 1) + ": Placecement - " + player.placement);
+        }
+
+        // display placement screen
+        List<int> taken = new List<int>();
+        foreach(Player player in players){
+            switch(player.placement){
+                case 1:
+                    player.piece.transform.position = placementSpawns[player.placement-1].transform.position;
+                    break;
+                case 2:
+                    player.piece.transform.position = new Vector3(placementSpawns[player.placement-1].transform.position.x - (taken.FindAll(p => p == 2).Count()*0.3f),
+                                                                  placementSpawns[player.placement-1].transform.position.y, 
+                                                                  placementSpawns[player.placement-1].transform.position.z);
+                    taken.Add(2);
+                    break;
+                case 3:
+                    player.piece.transform.position = new Vector3(placementSpawns[player.placement-1].transform.position.x + (taken.FindAll(p => p == 3).Count()*0.3f),
+                                                                  placementSpawns[player.placement-1].transform.position.y, 
+                                                                  placementSpawns[player.placement-1].transform.position.z);
+                    taken.Add(3);
+                    break;
+                case 4:
+                    player.piece.transform.position = placementSpawns[player.placement-1].transform.position;
+                    player.piece.transform.rotation = placementSpawns[player.placement-1].transform.rotation;
+                    break;
+            }
+        }
+    }
+
+    void CalculatePlacements(){
+        List<int> distances = new List<int>();
+        foreach(Player player in players){
+            distances.Add(Step(player.currTile));
+        }
+
+        int i = 0;
+        int place = 1;
+        int last = 0;
+        while(i < numberOfPlayers){
+            if(distances.Min() != last){
+                place += 1;
+            }
+            var index = distances.FindIndex(d => d == distances.Min());
+            players[index].placement = place;
+            last = distances.Min();
+            distances[index] = int.MaxValue;
+            i++;
+        }
+    }
+
+    int Step(GameObject tile){
+        Tile tileCode = tile.GetComponent<Tile>();
+        int count = 1;
+        if(tileCode.children.Count == 0){
+            return 0;
+        }
+        int childCount = int.MaxValue;
+        foreach(GameObject child in tileCode.children){
+            childCount = Mathf.Min(childCount, Step(child));
+        }
+        count += childCount;
+        return count;
     }
 
     void PlaceArrows()

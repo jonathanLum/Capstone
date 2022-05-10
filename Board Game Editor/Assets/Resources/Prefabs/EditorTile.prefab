@@ -509,7 +509,7 @@ MonoBehaviour:
   iconPlane: {fileID: 1752130951423680022}
   selected: 0
   effect: 0
-  effectValue: 0
+  effectValue: 1
   effectValText: {fileID: 516606276189311378}
   parent: {fileID: 0}
   children: []

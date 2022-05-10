@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class EditorController : MonoBehaviour
 {
     public Vector2Int boardLimits = new Vector2Int(7,7);
+    public Renderer grid;
     
     public Vector3 mouseLoc;
     public Vector3 snapPos;
@@ -21,6 +22,10 @@ public class EditorController : MonoBehaviour
     public List<GameObject> selection;
     public List<GameObject> allTiles;
 
+
+    private void Start() {
+        grid.material.SetVector("_Scale", new Vector4(boardLimits.x, boardLimits.y, 0, 0));
+    }
 
     // Update is called once per frame
     void Update()
