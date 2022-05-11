@@ -41,6 +41,7 @@ public class EditorController : MonoBehaviour
             mouseLoc.z = hit.point.z;
             snapPos.x = Mathf.RoundToInt(mouseLoc.x - 0.5f); 
             snapPos.z = Mathf.RoundToInt(mouseLoc.z - 0.5f);
+            //Debug.Log(snapPos);
 
             if(Input.GetMouseButtonDown(1)){
                 if(hitObject.tag == "Floor"){ 
@@ -137,7 +138,7 @@ public class EditorController : MonoBehaviour
             return false;
 
         // Check outside board limits
-        if(snapPos.x < -boardLimits.x || boardLimits.x < snapPos.x || snapPos.z < -boardLimits.y || boardLimits.y < snapPos.z)
+        if(snapPos.x < -boardLimits.x || boardLimits.x-1 < snapPos.x || snapPos.z < -boardLimits.y || boardLimits.y-1 < snapPos.z)
             return false;
         
         // Check too many neighbors ignoring lastTile

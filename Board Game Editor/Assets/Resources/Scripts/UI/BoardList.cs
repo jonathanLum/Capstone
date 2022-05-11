@@ -10,7 +10,7 @@ public class BoardList : MonoBehaviour
     public SaveController saveCtrl;
     public GameObject buttonListItem;
     private List<GameBoard> boardList;
-
+    public bool boardSelected = false;
     public int currIndex;
 
     // Start is called before the first frame update
@@ -59,5 +59,6 @@ public class BoardList : MonoBehaviour
         RectTransform rt = boardListItem.GetComponent<RectTransform>();
         currIndex = (int)Math.Abs(rt.anchoredPosition.y / rt.sizeDelta.y);
         saveCtrl.SetBoardID(currIndex);
+        boardSelected = true;
     }
 }
