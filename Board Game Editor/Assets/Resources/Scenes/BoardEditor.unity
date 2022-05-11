@@ -1762,10 +1762,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panSpeed: 5
-  panLimit: {x: 4, y: 4}
-  scrollSpeed: 40
-  minY: 5
-  maxY: 78
+  panLimit: {x: 10, y: 10}
+  scrollSpeed: 150
+  minY: 40
+  maxY: 130
 --- !u!114 &1520750465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1778,7 +1778,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca76f2a11f56dc4eb8e1b54333f4dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardLimits: {x: 7, y: 7}
+  boardLimits: {x: 8, y: 8}
+  grid: {fileID: 1760513157}
   mouseLoc: {x: 0, y: 0, z: 0}
   snapPos: {x: 0, y: 0, z: 0}
   tilePrefab: {fileID: 4866374925886155072, guid: e9caba4419c0e2249852986c4a59b338, type: 3}

@@ -12,6 +12,7 @@ TagManager:
   - SceneController
   - GameDataController
   - CameraController
+  - Notification
   layers:
   - Default
   - TransparentFX

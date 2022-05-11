@@ -50,25 +50,26 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!GetComponent<GameManager>().gameOver){
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                TogglePauseGame();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TogglePauseGame();
-        }
+            if (currentCamera == CAMERA.MAIN)
+            {
+                ControlKeyboardInput();
+            }
 
-        if (currentCamera == CAMERA.MAIN)
-        {
-            ControlKeyboardInput();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SwitchCameras();
+            }
         }
 
         if (playerTarget != null)
         {
             playerCameraRig.position = Vector3.Lerp(playerCameraRig.position, playerTarget.position, cameraMovementTime * Time.deltaTime);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SwitchCameras();
         }
     }
 

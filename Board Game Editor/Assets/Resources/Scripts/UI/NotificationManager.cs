@@ -7,12 +7,14 @@ public class NotificationManager : MonoBehaviour
     [SerializeField] float notificationDuration;
     [SerializeField] float notificationDelay;
 
+    public bool showNotifications = true;
+
     public IEnumerator NotifyLoop()
     {
         notificationQueue = new Queue<string>();
         Transform parent = GameObject.Find("Notifications").transform;
 
-        while (true)
+        while (showNotifications)
         {
             Vector3 position = new Vector3(0, 0, 0);
 
@@ -53,6 +55,12 @@ public class NotificationManager : MonoBehaviour
     public void Notify(string text)
     {
         notificationQueue.Enqueue(text);
+    }
+
+    public void Disable(){
+        showNotifications = false;
+        notificationQueue.Clear();
+        new List<GameObject>(GameObject.FindGameObjectsWithTag("Notification")).ForEach(delegate(GameObject obj){Destroy(obj);});
     }
 }
 

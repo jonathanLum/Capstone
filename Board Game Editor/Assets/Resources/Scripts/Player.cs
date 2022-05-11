@@ -9,5 +9,7 @@ public class Player
     public GameObject currTile;
     public bool skipNextTurn = false;
 
+    public int placement = 0;
+
     public int escapeRoll = 0;
 }
