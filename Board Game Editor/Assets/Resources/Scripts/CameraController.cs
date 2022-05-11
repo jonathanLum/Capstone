@@ -92,6 +92,7 @@ public class CameraController : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        TogglePauseGame();
         SceneController sceneCtrl = GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>();
         sceneCtrl.GoToMainMenu();
     }
