@@ -24,7 +24,7 @@ public class Dice : MonoBehaviour
         mouseDir = new Vector3(Input.GetAxis("Mouse X"), 0, Input.GetAxis("Mouse Y"));
         
         if(rolling){
-            if(GetComponent<Rigidbody>().IsSleeping() || (GetComponent<Rigidbody>().velocity.magnitude <= 0.0001f && GetComponent<Rigidbody>().angularVelocity.magnitude <= 0.0001f)){
+            if(GetComponent<Rigidbody>().IsSleeping()){
                 number = rollResult.number;
                 StartCoroutine(Delay());
             }

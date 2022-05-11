@@ -14,6 +14,9 @@ public class MainMenu : MonoBehaviour
     public GameObject menuPlayerSelect;
     public GameObject menuBoardSelect;
 
+    public BoardList boardListEdit;
+    public BoardList boardListPlay;
+
     public Stack<GameObject> menuStack = new Stack<GameObject>();
 
     // Start is called before the first frame update
@@ -69,7 +72,8 @@ public class MainMenu : MonoBehaviour
 
     public void OpenEditorExistingBoard()
     {
-        sceneCtrl.GoToEditor();
+        if(boardListEdit.boardSelected)
+            sceneCtrl.GoToEditor();
     }
 
     public void OpenMenuPlayerSelect()
@@ -88,6 +92,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        sceneCtrl.GoToPlayGame();
+        if(boardListPlay.boardSelected)
+            sceneCtrl.GoToPlayGame();
     }
 }

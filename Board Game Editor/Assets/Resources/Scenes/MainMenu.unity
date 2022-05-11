@@ -419,6 +419,8 @@ MonoBehaviour:
   menuEditorLoadBoard: {fileID: 1397732244}
   menuPlayerSelect: {fileID: 1343161099}
   menuBoardSelect: {fileID: 77280732}
+  boardListEdit: {fileID: 201294711}
+  boardListPlay: {fileID: 1834787364}
 --- !u!1 &201294706
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveCtrl: {fileID: 0}
   buttonListItem: {fileID: 9168688619703219628, guid: c0b98b77b6825f8a881fc5d858a7bbc2, type: 3}
+  boardSelected: 0
   currIndex: 0
 --- !u!1 &285747122
 GameObject:
@@ -841,7 +844,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2039176730}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1556,7 +1559,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1157691488}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5177,6 +5180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveCtrl: {fileID: 0}
   buttonListItem: {fileID: 9168688619703219628, guid: c0b98b77b6825f8a881fc5d858a7bbc2, type: 3}
+  boardSelected: 0
   currIndex: 0
 --- !u!114 &1834787365
 MonoBehaviour:
