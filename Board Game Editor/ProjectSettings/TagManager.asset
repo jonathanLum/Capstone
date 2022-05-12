@@ -13,6 +13,7 @@ TagManager:
   - GameDataController
   - CameraController
   - Notification
+  - GameOverCam
   layers:
   - Default
   - TransparentFX

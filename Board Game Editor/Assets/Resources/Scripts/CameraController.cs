@@ -67,6 +67,11 @@ public class CameraController : MonoBehaviour
             }
         }
 
+        if(GetComponent<GameManager>().gameOver)
+        {
+            playerTarget = GameObject.FindGameObjectWithTag("GameOverCam").transform;
+            followTransform.eulerAngles = new Vector3(38, 0, 0);
+        }
         if (playerTarget != null)
         {
             playerCameraRig.position = Vector3.Lerp(playerCameraRig.position, playerTarget.position, cameraMovementTime * Time.deltaTime);
