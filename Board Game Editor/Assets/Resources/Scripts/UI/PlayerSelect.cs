@@ -104,14 +104,17 @@ public class PlayerSelect : MonoBehaviour
     public void InitColorToPiece(GameObject piece)
     {
         Image image = piece.GetComponentInChildren<Image>();
+        MeshRenderer mesh = piece.GetComponentInChildren<MeshRenderer>();
 
         // image.material = availablePieceColors.Last.Value;
         // image.color = image.material.color;
 
         if (image.color == image.defaultMaterial.color)
         {
-            Debug.Log(availablePieceColors.Last.Value);
+            // Debug.Log(availablePieceColors.Last.Value);
             image.color = availablePieceColors.Last.Value.color;
+            mesh.material = availablePieceColors.Last.Value;
+
             selectedPieceColors[pieceSelectors.IndexOf(piece)] = availablePieceColors.Last.Value;
             availablePieceColors.RemoveLast();
         }
@@ -120,12 +123,15 @@ public class PlayerSelect : MonoBehaviour
     public void RemoveColorFromPiece(GameObject piece)
     {
         Image image = piece.GetComponentInChildren<Image>();
+        MeshRenderer mesh = piece.GetComponentInChildren<MeshRenderer>();
 
         if (image.color != image.defaultMaterial.color)
         {
             availablePieceColors.AddLast(colorMapping[image.color]);
             selectedPieceColors[pieceSelectors.IndexOf(piece)] = colorMapping[image.color];
             image.color = image.defaultMaterial.color;
+            mesh.material = image.defaultMaterial;
+
         }
 
     }
@@ -174,6 +180,7 @@ public class PlayerSelect : MonoBehaviour
         }
 
         pieceSelector.GetComponentInChildren<Image>().color = nextMaterial.color;
+        pieceSelector.GetComponentInChildren<MeshRenderer>().material = nextMaterial;
         selectedPieceColors[pieceSelectors.IndexOf(pieceSelector)] = nextMaterial;
 
     }
