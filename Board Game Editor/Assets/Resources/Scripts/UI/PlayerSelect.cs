@@ -23,6 +23,8 @@ public class PlayerSelect : MonoBehaviour
 
     public Dictionary<Color, Material> colorMapping;
 
+    public Material defaultGamePiece;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -103,15 +105,12 @@ public class PlayerSelect : MonoBehaviour
 
     public void InitColorToPiece(GameObject piece)
     {
-        Image image = piece.GetComponentInChildren<Image>();
+        MeshRenderer mesh = piece.GetComponentInChildren<MeshRenderer>();
 
-        // image.material = availablePieceColors.Last.Value;
-        // image.color = image.material.color;
-
-        if (image.color == image.defaultMaterial.color)
+        if (mesh.sharedMaterial == defaultGamePiece)
         {
-            Debug.Log(availablePieceColors.Last.Value);
-            image.color = availablePieceColors.Last.Value.color;
+            mesh.sharedMaterial = availablePieceColors.Last.Value;
+
             selectedPieceColors[pieceSelectors.IndexOf(piece)] = availablePieceColors.Last.Value;
             availablePieceColors.RemoveLast();
         }
@@ -119,13 +118,14 @@ public class PlayerSelect : MonoBehaviour
 
     public void RemoveColorFromPiece(GameObject piece)
     {
-        Image image = piece.GetComponentInChildren<Image>();
+        MeshRenderer mesh = piece.GetComponentInChildren<MeshRenderer>();
 
-        if (image.color != image.defaultMaterial.color)
+        if (mesh.sharedMaterial != defaultGamePiece)
         {
-            availablePieceColors.AddLast(colorMapping[image.color]);
-            selectedPieceColors[pieceSelectors.IndexOf(piece)] = colorMapping[image.color];
-            image.color = image.defaultMaterial.color;
+            availablePieceColors.AddLast(mesh.sharedMaterial);
+            selectedPieceColors[pieceSelectors.IndexOf(piece)] = defaultGamePiece;//colorMapping[image.color];
+            mesh.sharedMaterial = defaultGamePiece;
+
         }
 
     }
@@ -156,7 +156,7 @@ public class PlayerSelect : MonoBehaviour
     public void ChangeColor(GameObject pieceSelector, DIRECTION direction)
     {
         Material nextMaterial = availablePieceColors.Last.Value;
-        Material currentMaterial = colorMapping[pieceSelector.GetComponentInChildren<Image>().color];
+        Material currentMaterial = pieceSelector.GetComponentInChildren<MeshRenderer>().sharedMaterial; //colorMapping[pieceSelector.GetComponentInChildren<Image>().color];
 
         switch (direction)
         {
@@ -173,7 +173,7 @@ public class PlayerSelect : MonoBehaviour
                 break;
         }
 
-        pieceSelector.GetComponentInChildren<Image>().color = nextMaterial.color;
+        pieceSelector.GetComponentInChildren<MeshRenderer>().sharedMaterial = nextMaterial;
         selectedPieceColors[pieceSelectors.IndexOf(pieceSelector)] = nextMaterial;
 
     }
