@@ -50,7 +50,8 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!GetComponent<GameManager>().gameOver){
+        if (!GetComponent<GameManager>().gameOver)
+        {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 TogglePauseGame();
@@ -67,7 +68,7 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        if(GetComponent<GameManager>().gameOver)
+        if (GetComponent<GameManager>().gameOver)
         {
             playerTarget = GameObject.FindGameObjectWithTag("GameOverCam").transform;
             followTransform.eulerAngles = new Vector3(38, 0, 0);
@@ -97,6 +98,7 @@ public class CameraController : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        Time.timeScale = 1f;
         SceneController sceneCtrl = GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>();
         sceneCtrl.GoToMainMenu();
     }
