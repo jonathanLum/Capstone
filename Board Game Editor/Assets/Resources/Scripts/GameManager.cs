@@ -238,17 +238,20 @@ public class GameManager : MonoBehaviour
             switch(player.placement){
                 case 1:
                     player.piece.transform.position = placementSpawns[player.placement-1].transform.position;
+                    player.piece.transform.rotation = placementSpawns[player.placement-1].transform.rotation;
                     break;
                 case 2:
                     player.piece.transform.position = new Vector3(placementSpawns[player.placement-1].transform.position.x - (taken.FindAll(p => p == 2).Count()*0.3f),
                                                                   placementSpawns[player.placement-1].transform.position.y, 
                                                                   placementSpawns[player.placement-1].transform.position.z);
+                    player.piece.transform.rotation = placementSpawns[player.placement-1].transform.rotation;
                     taken.Add(2);
                     break;
                 case 3:
                     player.piece.transform.position = new Vector3(placementSpawns[player.placement-1].transform.position.x + (taken.FindAll(p => p == 3).Count()*0.3f),
                                                                   placementSpawns[player.placement-1].transform.position.y, 
                                                                   placementSpawns[player.placement-1].transform.position.z);
+                    player.piece.transform.rotation = placementSpawns[player.placement-1].transform.rotation;
                     taken.Add(3);
                     break;
                 case 4:
