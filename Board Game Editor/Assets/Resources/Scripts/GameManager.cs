@@ -170,14 +170,16 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
+        player.piece.GetComponent<GamePiece>().moving = false;
+
         // Wait for player to choose during attack
         while (attacking)
         {
             yield return null;
         }
 
-        player.piece.GetComponent<GamePiece>().moving = false;
         if (!gameOver)
+            yield return new WaitForSeconds(1.5f);
             IncrementTurn();
     }
 
@@ -324,6 +326,16 @@ public class GameManager : MonoBehaviour
         dir = childID;
         choosingDirection = false;
         //Debug.Log("chosen");
+    }
+
+    public void FireLaser(Transform target){
+        float heightOffset = 0.531f;
+        Vector3 endPos = new Vector3(target.position.x, target.position.y+heightOffset, target.position.z);
+        Vector3 pos = new Vector3(players[currentTurn].piece.transform.position.x, players[currentTurn].piece.transform.position.y+heightOffset, players[currentTurn].piece.transform.position.z);
+        GameObject laser = (GameObject)Instantiate(Resources.Load("Prefabs/Laser"), pos, Quaternion.identity);
+        laser.transform.LookAt(endPos);
+        laser.GetComponent<Laser>().target = endPos;
+        cameraController.playerTarget = laser.transform;
     }
 }
 

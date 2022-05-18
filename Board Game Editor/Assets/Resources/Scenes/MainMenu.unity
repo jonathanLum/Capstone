@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00041999097, g: 0.00041999097, b: 0.00041999097, a: 1}
+  m_IndirectSpecularColor: {r: 0.00023631638, g: 0.00023631638, b: 0.00023631638, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -753,12 +753,12 @@ MonoBehaviour:
   - {fileID: 630829541}
   activePieceSelectors: []
   pieceColors:
-  - {fileID: 2100000, guid: d39af9b3ed4f9021c94546aa9e896f99, type: 2}
-  - {fileID: 2100000, guid: 0d32f67be6401671588fadfeade4bfa4, type: 2}
-  - {fileID: 2100000, guid: bf43cf6062233c488b918d0201c9989a, type: 2}
-  - {fileID: 2100000, guid: 7c52505c7d37f8272b93ca0e83a9d419, type: 2}
   - {fileID: 2100000, guid: 5a95ec3a21490c9d68704e0f2595c922, type: 2}
   - {fileID: 2100000, guid: c0a9875af924853acb61f0a1c5995ddb, type: 2}
+  - {fileID: 2100000, guid: bf43cf6062233c488b918d0201c9989a, type: 2}
+  - {fileID: 2100000, guid: 7c52505c7d37f8272b93ca0e83a9d419, type: 2}
+  - {fileID: 2100000, guid: 0d32f67be6401671588fadfeade4bfa4, type: 2}
+  - {fileID: 2100000, guid: d39af9b3ed4f9021c94546aa9e896f99, type: 2}
   selectedPieceColors: []
   defaultGamePiece: {fileID: -4568866586666005575, guid: b4a942f1923e2e34083ec9469dde806f, type: 3}
 --- !u!1 &322665075

@@ -83,7 +83,7 @@ public class EditorTile : MonoBehaviour, EffectTypeEnum
                 CanvasVis(false);
                 break;
             case EffectTypeEnum.Types.Start:
-                icon = (Texture2D)Resources.Load("Textures/StartIcon");
+                icon = null;
                 CanvasVis(false);
                 break;
             case EffectTypeEnum.Types.End:

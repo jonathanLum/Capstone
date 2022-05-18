@@ -47,19 +47,10 @@ public class TurnOrderUI : MonoBehaviour
 
             listTokenItem.GetComponent<RectTransform>().anchoredPosition = position;
 
-            ColorBlock cb = listTokenItem.GetComponent<Button>().colors;
-            Color color = gameData.pieceColors[buttonID].color;
-            cb.highlightedColor = color;
-            float H, S, V;
-            Color.RGBToHSV(color, out H, out S, out V);
-            S = 0.2f;
-            color = Color.HSVToRGB(H, S, V);
-            cb.normalColor = color;
-            listTokenItem.GetComponent<Button>().colors = cb;
-
             GameObject listTokenItemText = listTokenItem.transform.GetChild(0).gameObject;
             TMPro.TextMeshProUGUI text = listTokenItemText.GetComponent<TMPro.TextMeshProUGUI>();
             text.text = "Player " + (players[buttonID].ID+1);
+            text.color = gameData.pieceColors[buttonID].color;
 
             position.y -= listTokenItem.GetComponent<RectTransform>().sizeDelta.y + offset;
 
@@ -67,9 +58,9 @@ public class TurnOrderUI : MonoBehaviour
             GameObject listTokenItemX = listTokenItem.transform.GetChild(1).gameObject;
             if(gameManager.players[buttonID].skipNextTurn && (i - startIndex) < gameManager.numberOfPlayers)
                 listTokenItemX.SetActive(true);
-            listTokenItem.GetComponent<Button>().onClick.AddListener(() => { if(gameManager.attacking && gameManager.currentTurn != buttonID)
-                                                                                {gameManager.players[buttonID].skipNextTurn = true; 
-                                                                                listTokenItemX.SetActive(true); 
+            listTokenItem.GetComponent<Button>().onClick.AddListener(() => { if(gameManager.attacking && gameManager.currentTurn != buttonID && gameManager.players[buttonID].skipNextTurn != true)
+                                                                                {gameManager.FireLaser(gameManager.players[buttonID].piece.transform);
+                                                                                gameManager.players[buttonID].skipNextTurn = true;
                                                                                 gameManager.attacking = false;}
                                                                             EventSystem.current.SetSelectedGameObject(null); });
         }
