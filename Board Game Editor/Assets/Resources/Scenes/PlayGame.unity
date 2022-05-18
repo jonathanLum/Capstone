@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00023631638, g: 0.00023631638, b: 0.00023631638, a: 1}
+  m_IndirectSpecularColor: {r: 0.00041999097, g: 0.00041999097, b: 0.00041999097, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -255,7 +255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 160.03003, y: -235}
+  m_AnchoredPosition: {x: 209, y: -249}
   m_SizeDelta: {x: 320.0522, y: 412.7068}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &171380980
@@ -725,7 +725,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7be56b4739eefc042b40fd6d02a24d3e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e2989aa910d9c134b956f1802975f53d, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -796,7 +796,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 257}
+  m_AnchoredPosition: {x: -50, y: 257}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &494763306
@@ -821,8 +821,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Game Paused
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f946ab74dd2e94144a346bdb620e34a3, type: 2}
-  m_sharedMaterial: {fileID: -8937236048892220453, guid: f946ab74dd2e94144a346bdb620e34a3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 91d9698ebddc7f842b021e82e6e2b617, type: 2}
+  m_sharedMaterial: {fileID: 3148388415522364431, guid: 91d9698ebddc7f842b021e82e6e2b617, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -882,7 +882,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -94.71594, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5877,7 +5877,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7be56b4739eefc042b40fd6d02a24d3e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e2989aa910d9c134b956f1802975f53d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6721,8 +6721,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Turn Order
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f946ab74dd2e94144a346bdb620e34a3, type: 2}
-  m_sharedMaterial: {fileID: -8937236048892220453, guid: f946ab74dd2e94144a346bdb620e34a3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 91d9698ebddc7f842b021e82e6e2b617, type: 2}
+  m_sharedMaterial: {fileID: 3148388415522364431, guid: 91d9698ebddc7f842b021e82e6e2b617, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7124,6 +7124,14 @@ PrefabInstance:
       propertyPath: m_text
       value: Main Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 410051568402879701, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 91d9698ebddc7f842b021e82e6e2b617, type: 2}
+    - target: {fileID: 410051568402879701, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3148388415522364431, guid: 91d9698ebddc7f842b021e82e6e2b617, type: 2}
     - target: {fileID: 2764777510146443639, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
       propertyPath: m_Name
       value: ButtonMainMenu
@@ -7500,7 +7508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.71171236, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7897,6 +7905,14 @@ PrefabInstance:
       propertyPath: m_text
       value: Resume
       objectReference: {fileID: 0}
+    - target: {fileID: 410051568402879701, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 91d9698ebddc7f842b021e82e6e2b617, type: 2}
+    - target: {fileID: 410051568402879701, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3148388415522364431, guid: 91d9698ebddc7f842b021e82e6e2b617, type: 2}
     - target: {fileID: 2764777510146443639, guid: ba8a93b3747a40aef8a0aaef29e8cd52, type: 3}
       propertyPath: m_Name
       value: ButtonResume
