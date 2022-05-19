@@ -458,10 +458,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player 2
+  m_text: Player 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f946ab74dd2e94144a346bdb620e34a3, type: 2}
-  m_sharedMaterial: {fileID: -8937236048892220453, guid: f946ab74dd2e94144a346bdb620e34a3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 91d9698ebddc7f842b021e82e6e2b617, type: 2}
+  m_sharedMaterial: {fileID: 3148388415522364431, guid: 91d9698ebddc7f842b021e82e6e2b617, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
