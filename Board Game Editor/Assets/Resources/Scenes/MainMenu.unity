@@ -1901,6 +1901,10 @@ PrefabInstance:
       value: SelectPlayer2
       objectReference: {fileID: 0}
     - target: {fileID: 3268616806374631416, guid: 66f34b6654a5a35058f15689cd5c0166, type: 3}
+      propertyPath: m_text
+      value: Player 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268616806374631416, guid: 66f34b6654a5a35058f15689cd5c0166, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 91d9698ebddc7f842b021e82e6e2b617, type: 2}
