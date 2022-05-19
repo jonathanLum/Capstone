@@ -105,7 +105,7 @@ public class PlayerSelect : MonoBehaviour
 
     public void InitColorToPiece(GameObject piece)
     {
-        MeshRenderer mesh = piece.GetComponentInChildren<MeshRenderer>();
+        SkinnedMeshRenderer mesh = piece.GetComponentInChildren<SkinnedMeshRenderer>();
 
         if (mesh.sharedMaterial == defaultGamePiece)
         {
@@ -118,7 +118,7 @@ public class PlayerSelect : MonoBehaviour
 
     public void RemoveColorFromPiece(GameObject piece)
     {
-        MeshRenderer mesh = piece.GetComponentInChildren<MeshRenderer>();
+        SkinnedMeshRenderer mesh = piece.GetComponentInChildren<SkinnedMeshRenderer>();
 
         if (mesh.sharedMaterial != defaultGamePiece)
         {
@@ -156,7 +156,7 @@ public class PlayerSelect : MonoBehaviour
     public void ChangeColor(GameObject pieceSelector, DIRECTION direction)
     {
         Material nextMaterial = availablePieceColors.Last.Value;
-        Material currentMaterial = pieceSelector.GetComponentInChildren<MeshRenderer>().sharedMaterial; //colorMapping[pieceSelector.GetComponentInChildren<Image>().color];
+        Material currentMaterial = pieceSelector.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial; //colorMapping[pieceSelector.GetComponentInChildren<Image>().color];
 
         switch (direction)
         {
@@ -173,7 +173,7 @@ public class PlayerSelect : MonoBehaviour
                 break;
         }
 
-        pieceSelector.GetComponentInChildren<MeshRenderer>().sharedMaterial = nextMaterial;
+        pieceSelector.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial = nextMaterial;
         selectedPieceColors[pieceSelectors.IndexOf(pieceSelector)] = nextMaterial;
 
     }
