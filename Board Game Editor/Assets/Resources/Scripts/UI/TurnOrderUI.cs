@@ -59,7 +59,7 @@ public class TurnOrderUI : MonoBehaviour
             if(gameManager.players[buttonID].skipNextTurn && (i - startIndex) < gameManager.numberOfPlayers)
                 listTokenItemX.SetActive(true);
             listTokenItem.GetComponent<Button>().onClick.AddListener(() => { if(gameManager.attacking && gameManager.currentTurn != buttonID && gameManager.players[buttonID].skipNextTurn != true)
-                                                                                {gameManager.FireLaser(gameManager.players[buttonID].piece.transform);
+                                                                                {gameManager.FireLaser(gameManager.players[buttonID].piece);
                                                                                 gameManager.players[buttonID].skipNextTurn = true;
                                                                                 gameManager.attacking = false;}
                                                                             EventSystem.current.SetSelectedGameObject(null); });

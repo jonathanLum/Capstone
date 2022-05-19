@@ -65,16 +65,16 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(notifications.NotifyLoop());
         notifications.Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
-
+        
         Queue<Material> pieceColors = new Queue<Material>(gameData.pieceColors);
         foreach (Player plr in players)
         {
             plr.currTile = allTiles[0];
             plr.piece = (GameObject)GameObject.Instantiate(
                 Resources.Load("Prefabs/GamePiece"), plr.currTile.GetComponent<Tile>().GetLocation() + spaceOffsets[plr.ID],
-                Quaternion.identity);
+                Quaternion.Euler(0, 180, 0));
 
-            plr.piece.GetComponentInChildren<MeshRenderer>().material = pieceColors.Dequeue();
+            plr.piece.GetComponentInChildren<SkinnedMeshRenderer>().material = pieceColors.Dequeue();
         }
 
         cameraController = GameObject.FindGameObjectWithTag("CameraController").GetComponent<CameraController>();
@@ -197,6 +197,9 @@ public class GameManager : MonoBehaviour
 
     void IncrementTurn()
     {
+        if (gameOver)
+            return;
+
         diceCamera.SetActive(true);
         currentTurn += 1;
         changeTurn.Invoke();
@@ -226,6 +229,7 @@ public class GameManager : MonoBehaviour
     void GameOver(){
         gameOver = true;
         gameOverEvent.Invoke(currentTurn+1);
+        diceCamera.SetActive(false);
 
         CalculatePlacements();
 
@@ -328,13 +332,11 @@ public class GameManager : MonoBehaviour
         //Debug.Log("chosen");
     }
 
-    public void FireLaser(Transform target){
+    public void FireLaser(GameObject target){
         float heightOffset = 0.531f;
-        Vector3 endPos = new Vector3(target.position.x, target.position.y+heightOffset, target.position.z);
         Vector3 pos = new Vector3(players[currentTurn].piece.transform.position.x, players[currentTurn].piece.transform.position.y+heightOffset, players[currentTurn].piece.transform.position.z);
         GameObject laser = (GameObject)Instantiate(Resources.Load("Prefabs/Laser"), pos, Quaternion.identity);
-        laser.transform.LookAt(endPos);
-        laser.GetComponent<Laser>().target = endPos;
+        laser.GetComponent<Laser>().target = target;
         cameraController.playerTarget = laser.transform;
     }
 }
