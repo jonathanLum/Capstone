@@ -109,7 +109,12 @@ public class PlayerSelect : MonoBehaviour
 
         if (mesh.sharedMaterial == defaultGamePiece)
         {
+            Material[] pieceMaterials = mesh.materials;
+            pieceMaterials[2] = availablePieceColors.Last.Value;
+            mesh.materials = pieceMaterials;
+
             mesh.sharedMaterial = availablePieceColors.Last.Value;
+
 
             selectedPieceColors[pieceSelectors.IndexOf(piece)] = availablePieceColors.Last.Value;
             availablePieceColors.RemoveLast();
@@ -126,6 +131,9 @@ public class PlayerSelect : MonoBehaviour
             selectedPieceColors[pieceSelectors.IndexOf(piece)] = defaultGamePiece;//colorMapping[image.color];
             mesh.sharedMaterial = defaultGamePiece;
 
+            Material[] pieceMaterials = mesh.materials;
+            pieceMaterials[2] = defaultGamePiece;
+            mesh.materials = pieceMaterials;
         }
 
     }
@@ -173,8 +181,15 @@ public class PlayerSelect : MonoBehaviour
                 break;
         }
 
-        pieceSelector.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial = nextMaterial;
+
+
+        SkinnedMeshRenderer mesh = pieceSelector.GetComponentInChildren<SkinnedMeshRenderer>();
+        mesh.sharedMaterial = nextMaterial;
         selectedPieceColors[pieceSelectors.IndexOf(pieceSelector)] = nextMaterial;
+
+        Material[] pieceMaterials = mesh.materials;
+        pieceMaterials[2] = nextMaterial;
+        mesh.materials = pieceMaterials;
 
     }
 }
