@@ -68,7 +68,6 @@ public class BoardList : MonoBehaviour
         currIndex = (int)Math.Abs(rt.anchoredPosition.y / (rt.sizeDelta.y + spacing));
         saveCtrl.SetBoardID(currIndex);
 
-        Debug.Log("current index " + currIndex);
         boardSelected = true;
     }
 }
