@@ -66,6 +66,7 @@ public class BoardList : MonoBehaviour
         float spacing = scrollViewContent.GetComponent<VerticalLayoutGroup>().spacing;
 
         currIndex = (int)Math.Abs(rt.anchoredPosition.y / (rt.sizeDelta.y + spacing));
+        Debug.Log(currIndex);
         saveCtrl.SetBoardID(currIndex);
 
         boardSelected = true;
