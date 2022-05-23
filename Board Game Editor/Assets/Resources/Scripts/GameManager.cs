@@ -136,6 +136,9 @@ public class GameManager : MonoBehaviour
                         GameOver();
                         break;
                     }
+                    if(player.currTile.GetComponent<Tile>().parent == null){
+                        spacesToMove = 0;
+                    }
                     if (!gameOver && spacesToMove == 0)
                         ApplyEffect();
                 }
@@ -166,7 +169,9 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    player.currTile = player.currTile.GetComponent<Tile>().parent;
+                    if(player.currTile.GetComponent<Tile>().parent != null){
+                        player.currTile = player.currTile.GetComponent<Tile>().parent;
+                    }
                 }
                 targetPos = player.currTile.GetComponent<Tile>().GetLocation() + spaceOffsets[player.ID];
                 player.piece.transform.LookAt(targetPos);

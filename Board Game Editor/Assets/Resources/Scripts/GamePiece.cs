@@ -7,9 +7,7 @@ public class GamePiece : MonoBehaviour
     public bool moving = true;
     [SerializeField] private GameObject model;
     public Animator anim;
-    [SerializeField]private float distance = 20;
-    [SerializeField]private float speed = 2;
-    [SerializeField]private float rotateSpeed = 20;
+
 
     void Update()
     {
