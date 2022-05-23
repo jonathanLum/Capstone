@@ -29,11 +29,16 @@ public class BoardList : MonoBehaviour
 
     public void populateBoardList()
     {
+
+        // Create a new list item for the board, set as parent to the scrollview content
+        Transform scrollViewContent = GameObject.Find("Content").transform;
+
         Vector3 position = Vector3.zero;
+
         foreach (GameBoard board in boardList)
         {
-            // Create a new list item for the board, set as parent to the scrollview content
-            Transform scrollViewContent = GameObject.Find("Content").transform;
+
+
             GameObject boardListItem = Instantiate(buttonListItem, new Vector3(0, 0, 0), Quaternion.identity, scrollViewContent);
 
             // UI elements use the RectTransform component instead of Transform
@@ -57,8 +62,12 @@ public class BoardList : MonoBehaviour
         // determine index of the list based on calculating the difference
         // between this button and the distance from top of the container.
         RectTransform rt = boardListItem.GetComponent<RectTransform>();
-        currIndex = (int)Math.Abs(rt.anchoredPosition.y / rt.sizeDelta.y);
+        Transform scrollViewContent = GameObject.Find("Content").transform;
+        float spacing = scrollViewContent.GetComponent<VerticalLayoutGroup>().spacing;
+
+        currIndex = (int)Math.Abs(rt.anchoredPosition.y / (rt.sizeDelta.y + spacing));
         saveCtrl.SetBoardID(currIndex);
+
         boardSelected = true;
     }
 }

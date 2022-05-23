@@ -6,7 +6,7 @@ using System.Linq;
 
 
 [System.Serializable]
-public class MyIntEvent : UnityEvent<int>{}
+public class MyIntEvent : UnityEvent<int> { }
 
 public class GameManager : MonoBehaviour
 {
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(notifications.NotifyLoop());
         notifications.Notify("Player " + (players[currentTurn].ID + 1).ToString() + " Turn");
-        
+
         Queue<Material> pieceColors = new Queue<Material>(gameData.pieceColors);
         foreach (Player plr in players)
         {
@@ -74,7 +74,12 @@ public class GameManager : MonoBehaviour
                 Resources.Load("Prefabs/GamePiece"), plr.currTile.GetComponent<Tile>().GetLocation() + spaceOffsets[plr.ID],
                 Quaternion.Euler(0, 180, 0));
 
-            plr.piece.GetComponentInChildren<SkinnedMeshRenderer>().material = pieceColors.Dequeue();
+
+            // plr.piece.GetComponentInChildren<SkinnedMeshRenderer>().material = pieceColors.Dequeue();
+            SkinnedMeshRenderer mesh = plr.piece.GetComponentInChildren<SkinnedMeshRenderer>();
+            Material[] pieceMaterials = mesh.materials;
+            pieceMaterials[2] = pieceColors.Dequeue();
+            mesh.materials = pieceMaterials;
         }
 
         cameraController = GameObject.FindGameObjectWithTag("CameraController").GetComponent<CameraController>();
@@ -180,7 +185,7 @@ public class GameManager : MonoBehaviour
 
         if (!gameOver)
             yield return new WaitForSeconds(1.5f);
-            IncrementTurn();
+        IncrementTurn();
     }
 
     void ApplyEffect()
@@ -226,59 +231,67 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void GameOver(){
+    void GameOver()
+    {
         gameOver = true;
-        gameOverEvent.Invoke(currentTurn+1);
+        gameOverEvent.Invoke(currentTurn + 1);
         diceCamera.SetActive(false);
 
         CalculatePlacements();
 
         // log all placements
-        foreach(Player player in players){
+        foreach (Player player in players)
+        {
             Debug.Log("Player " + (player.ID + 1) + ": Placecement - " + player.placement);
         }
 
         // display placement screen
         List<int> taken = new List<int>();
-        foreach(Player player in players){
-            switch(player.placement){
+        foreach (Player player in players)
+        {
+            switch (player.placement)
+            {
                 case 1:
-                    player.piece.transform.position = placementSpawns[player.placement-1].transform.position;
-                    player.piece.transform.rotation = placementSpawns[player.placement-1].transform.rotation;
+                    player.piece.transform.position = placementSpawns[player.placement - 1].transform.position;
+                    player.piece.transform.rotation = placementSpawns[player.placement - 1].transform.rotation;
                     break;
                 case 2:
-                    player.piece.transform.position = new Vector3(placementSpawns[player.placement-1].transform.position.x - (taken.FindAll(p => p == 2).Count()*0.3f),
-                                                                  placementSpawns[player.placement-1].transform.position.y, 
-                                                                  placementSpawns[player.placement-1].transform.position.z);
-                    player.piece.transform.rotation = placementSpawns[player.placement-1].transform.rotation;
+                    player.piece.transform.position = new Vector3(placementSpawns[player.placement - 1].transform.position.x - (taken.FindAll(p => p == 2).Count() * 0.3f),
+                                                                  placementSpawns[player.placement - 1].transform.position.y,
+                                                                  placementSpawns[player.placement - 1].transform.position.z);
+                    player.piece.transform.rotation = placementSpawns[player.placement - 1].transform.rotation;
                     taken.Add(2);
                     break;
                 case 3:
-                    player.piece.transform.position = new Vector3(placementSpawns[player.placement-1].transform.position.x + (taken.FindAll(p => p == 3).Count()*0.3f),
-                                                                  placementSpawns[player.placement-1].transform.position.y, 
-                                                                  placementSpawns[player.placement-1].transform.position.z);
-                    player.piece.transform.rotation = placementSpawns[player.placement-1].transform.rotation;
+                    player.piece.transform.position = new Vector3(placementSpawns[player.placement - 1].transform.position.x + (taken.FindAll(p => p == 3).Count() * 0.3f),
+                                                                  placementSpawns[player.placement - 1].transform.position.y,
+                                                                  placementSpawns[player.placement - 1].transform.position.z);
+                    player.piece.transform.rotation = placementSpawns[player.placement - 1].transform.rotation;
                     taken.Add(3);
                     break;
                 case 4:
-                    player.piece.transform.position = placementSpawns[player.placement-1].transform.position;
-                    player.piece.transform.rotation = placementSpawns[player.placement-1].transform.rotation;
+                    player.piece.transform.position = placementSpawns[player.placement - 1].transform.position;
+                    player.piece.transform.rotation = placementSpawns[player.placement - 1].transform.rotation;
                     break;
             }
         }
     }
 
-    void CalculatePlacements(){
+    void CalculatePlacements()
+    {
         List<int> distances = new List<int>();
-        foreach(Player player in players){
+        foreach (Player player in players)
+        {
             distances.Add(Step(player.currTile));
         }
 
         int i = 0;
         int place = 1;
         int last = 0;
-        while(i < numberOfPlayers){
-            if(distances.Min() != last){
+        while (i < numberOfPlayers)
+        {
+            if (distances.Min() != last)
+            {
                 place += 1;
             }
             var index = distances.FindIndex(d => d == distances.Min());
@@ -289,14 +302,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    int Step(GameObject tile){
+    int Step(GameObject tile)
+    {
         Tile tileCode = tile.GetComponent<Tile>();
         int count = 1;
-        if(tileCode.children.Count == 0){
+        if (tileCode.children.Count == 0)
+        {
             return 0;
         }
         int childCount = int.MaxValue;
-        foreach(GameObject child in tileCode.children){
+        foreach (GameObject child in tileCode.children)
+        {
             childCount = Mathf.Min(childCount, Step(child));
         }
         count += childCount;
@@ -332,9 +348,10 @@ public class GameManager : MonoBehaviour
         //Debug.Log("chosen");
     }
 
-    public void FireLaser(GameObject target){
+    public void FireLaser(GameObject target)
+    {
         float heightOffset = 0.531f;
-        Vector3 pos = new Vector3(players[currentTurn].piece.transform.position.x, players[currentTurn].piece.transform.position.y+heightOffset, players[currentTurn].piece.transform.position.z);
+        Vector3 pos = new Vector3(players[currentTurn].piece.transform.position.x, players[currentTurn].piece.transform.position.y + heightOffset, players[currentTurn].piece.transform.position.z);
         GameObject laser = (GameObject)Instantiate(Resources.Load("Prefabs/Laser"), pos, Quaternion.identity);
         laser.GetComponent<Laser>().target = target;
         cameraController.playerTarget = laser.transform;
