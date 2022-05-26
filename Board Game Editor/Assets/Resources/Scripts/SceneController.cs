@@ -16,13 +16,14 @@ public class SceneController : MonoBehaviour
     void Start()
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+
     }
 
     public void GoToEditor()
     {
         //SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
         SceneManager.LoadScene("BoardEditor", LoadSceneMode.Single);
-
+        SFXController.SFXInstance.Audio.PlayOneShot(SFXController.SFXInstance.Click);
     }
 
 
@@ -30,6 +31,7 @@ public class SceneController : MonoBehaviour
     {
         //SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        SFXController.SFXInstance.Audio.PlayOneShot(SFXController.SFXInstance.Click);
 
     }
 
@@ -37,6 +39,7 @@ public class SceneController : MonoBehaviour
     {
         //SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
         SceneManager.LoadScene("PlayGame", LoadSceneMode.Single);
+        SFXController.SFXInstance.Audio.PlayOneShot(SFXController.SFXInstance.Click);
 
     }
 }

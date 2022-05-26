@@ -1279,6 +1279,7 @@ GameObject:
   - component: {fileID: 6234628500917954642}
   - component: {fileID: 2211061827549735433}
   - component: {fileID: 8314900448184784109}
+  - component: {fileID: 7988877707058233902}
   m_Layer: 0
   m_Name: GamePiece
   m_TagString: Untagged
@@ -1318,9 +1319,6 @@ MonoBehaviour:
   moving: 0
   model: {fileID: 1208946523458738206}
   anim: {fileID: 8314900448184784109}
-  distance: 11
-  speed: 5
-  rotateSpeed: 20
 --- !u!95 &8314900448184784109
 Animator:
   serializedVersion: 4
@@ -1341,6 +1339,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7988877707058233902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5809849668248652258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b8c449350260943b4b9ca89054ed95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5880492508798747066
 GameObject:
   m_ObjectHideFlags: 0
