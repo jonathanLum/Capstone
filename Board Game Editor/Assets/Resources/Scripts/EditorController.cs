@@ -22,6 +22,8 @@ public class EditorController : MonoBehaviour
     public List<GameObject> selection;
     public List<GameObject> allTiles;
 
+    public GameObject helpPanel;
+
 
     private void Start() {
         grid.material.SetVector("_Scale", new Vector4(boardLimits.x, boardLimits.y, 0, 0));
@@ -30,6 +32,9 @@ public class EditorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(helpPanel.activeSelf)
+            return;
+        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 1000, LayerMask.NameToLayer("Terrain")))
@@ -133,6 +138,9 @@ public class EditorController : MonoBehaviour
 
     public GameObject lastTile;
     bool DrawProtectionCheck(){
+        if(helpPanel.activeSelf)
+            return false;
+        
         // Check occupied space
         if(isOccupied(snapPos))
             return false;

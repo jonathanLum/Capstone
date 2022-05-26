@@ -9,6 +9,7 @@ public class EditorWindow : MonoBehaviour
     public TMP_InputField boardName;
     public Button saveButton;
     public Button reloadButton;
+    public GameObject helpPanel;
     public Button quitButton;
 
     GameObject saveCtrl;
@@ -23,10 +24,20 @@ public class EditorWindow : MonoBehaviour
         quitButton.onClick.AddListener(PromptQuit);
 
         boardName.text = saveCtrl.GetComponent<SaveController>().GetCurrentBoard().name;
+
+        helpPanel.SetActive(false);
     }
 
     void PromptQuit(){
         Debug.Log("Unsaved progress will be lost");
         GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>().GoToMainMenu();
+    }
+
+    public void ToggleHelp(){
+        if(helpPanel.activeSelf){
+            helpPanel.SetActive(false);
+        }else{
+            helpPanel.SetActive(true);
+        }
     }
 }

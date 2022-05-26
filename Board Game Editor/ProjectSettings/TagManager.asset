@@ -14,6 +14,7 @@ TagManager:
   - CameraController
   - Notification
   - GameOverCam
+  - helpPanel
   layers:
   - Default
   - TransparentFX
