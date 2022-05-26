@@ -157,7 +157,8 @@ MonoBehaviour:
   Click: {fileID: 8300000, guid: 8dcac5dbb90b79d4a807daddbce202dc, type: 3}
   diceShake: {fileID: 8300000, guid: 06dcf65b5436b6f4d80d6342fc6508d1, type: 3}
   diceCollision: {fileID: 8300000, guid: 52ad4addee2f03f4c9aee73ef9674f82, type: 3}
-  playerStep: {fileID: 8300000, guid: f8aed4f5b10d6684095c3d1598e7af24, type: 3}
+  playerStep: {fileID: 8300000, guid: 7e2fa86f87f3b454ea3f9b680550456e, type: 3}
+  playerHit: {fileID: 8300000, guid: 59175c973bad32543937037f07b4442e, type: 3}
 --- !u!82 &71620022
 AudioSource:
   m_ObjectHideFlags: 0

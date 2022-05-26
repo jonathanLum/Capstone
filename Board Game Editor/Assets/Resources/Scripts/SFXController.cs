@@ -9,6 +9,7 @@ public class SFXController : MonoBehaviour
     public AudioClip diceShake;
     public AudioClip diceCollision;
     public AudioClip playerStep;
+    public AudioClip playerHit;
 
     public static SFXController SFXInstance;
 
@@ -32,5 +33,10 @@ public class SFXController : MonoBehaviour
     public void playFootstep()
     {
         SFXInstance.Audio.PlayOneShot(playerStep);
+    }
+
+        public void playGetHit()
+    {
+        SFXInstance.Audio.PlayOneShot(playerHit);
     }
 }
