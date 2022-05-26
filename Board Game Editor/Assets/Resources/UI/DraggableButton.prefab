@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f946ab74dd2e94144a346bdb620e34a3, type: 2}
-  m_sharedMaterial: {fileID: -8937236048892220453, guid: f946ab74dd2e94144a346bdb620e34a3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -275,7 +275,6 @@ MonoBehaviour:
   onAddEffect:
     m_PersistentCalls:
       m_Calls: []
-  icon: {fileID: 0}
   effect: 0
 --- !u!114 &5115456802798920005
 MonoBehaviour:
