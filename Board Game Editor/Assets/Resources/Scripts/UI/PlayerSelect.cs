@@ -106,10 +106,13 @@ public class PlayerSelect : MonoBehaviour
     public void InitColorToPiece(GameObject piece)
     {
         SkinnedMeshRenderer mesh = piece.GetComponentInChildren<SkinnedMeshRenderer>();
+        Material[] sharedPieceMaterials = mesh.sharedMaterials;
 
-        if (mesh.sharedMaterial == defaultGamePiece)
+
+        if (sharedPieceMaterials[2] == defaultGamePiece)
         {
             Material[] pieceMaterials = mesh.materials;
+            pieceMaterials = mesh.materials;
             pieceMaterials[2] = availablePieceColors.Last.Value;
             mesh.materials = pieceMaterials;
 
@@ -124,10 +127,11 @@ public class PlayerSelect : MonoBehaviour
     public void RemoveColorFromPiece(GameObject piece)
     {
         SkinnedMeshRenderer mesh = piece.GetComponentInChildren<SkinnedMeshRenderer>();
+        Material[] sharedPieceMaterials = mesh.sharedMaterials;
 
-        if (mesh.sharedMaterial != defaultGamePiece)
+        if (sharedPieceMaterials[2] != defaultGamePiece)
         {
-            availablePieceColors.AddLast(mesh.sharedMaterial);
+            availablePieceColors.AddLast(sharedPieceMaterials[2]);
             selectedPieceColors[pieceSelectors.IndexOf(piece)] = defaultGamePiece;//colorMapping[image.color];
             mesh.sharedMaterial = defaultGamePiece;
 

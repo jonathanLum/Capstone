@@ -7,6 +7,8 @@ public class NotificationManager : MonoBehaviour
     [SerializeField] float notificationDuration;
     [SerializeField] float notificationDelay;
 
+    [SerializeField] float notificationSpeed;
+
     public bool showNotifications = true;
 
     public IEnumerator NotifyLoop()
@@ -17,6 +19,16 @@ public class NotificationManager : MonoBehaviour
         while (showNotifications)
         {
             Vector3 position = new Vector3(0, 0, 0);
+
+            int childIndex = 0;
+            foreach (Transform child in parent)
+            {
+                position.y = -((childIndex) * child.GetComponent<RectTransform>().sizeDelta.y + ((childIndex + 1) * 10));
+                child.gameObject.GetComponent<RectTransform>().localPosition = Vector3.Lerp(child.gameObject.GetComponent<RectTransform>().localPosition, position, notificationSpeed * Time.deltaTime);
+                childIndex++;
+            }
+
+            position = new Vector3(0, 0, 0);
 
             while (notificationQueue.Count > 0)
             {
@@ -31,15 +43,7 @@ public class NotificationManager : MonoBehaviour
                 yield return new WaitForSeconds(notificationDelay);
             }
 
-            int childIndex = 0;
-            position = new Vector3(0, 0, 0);
-            foreach (Transform child in parent)
-            {
-                position.y = -((childIndex) * child.GetComponent<RectTransform>().sizeDelta.y + ((childIndex + 1) * 10));
-                child.gameObject.GetComponent<RectTransform>().localPosition = position;
-                // child.gameObject.GetComponent<RectTransform>().localPosition = Vector3.Lerp(child.gameObject.GetComponent<RectTransform>().localPosition, position, notificationDelay * Time.deltaTime);
-                childIndex++;
-            }
+
 
             yield return null;
         }
@@ -57,10 +61,11 @@ public class NotificationManager : MonoBehaviour
         notificationQueue.Enqueue(text);
     }
 
-    public void Disable(){
+    public void Disable()
+    {
         showNotifications = false;
         notificationQueue.Clear();
-        new List<GameObject>(GameObject.FindGameObjectsWithTag("Notification")).ForEach(delegate(GameObject obj){Destroy(obj);});
+        new List<GameObject>(GameObject.FindGameObjectsWithTag("Notification")).ForEach(delegate (GameObject obj) { Destroy(obj); });
     }
 }
 

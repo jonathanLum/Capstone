@@ -6518,6 +6518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notificationDuration: 3
   notificationDelay: 1
+  notificationSpeed: 10
   showNotifications: 1
 --- !u!1001 &841637613
 PrefabInstance:
